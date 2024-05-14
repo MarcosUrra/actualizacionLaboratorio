@@ -1,0 +1,38 @@
+.table-container {
+    flex: 1; 
+    overflow-y: auto;
+}
+
+.form-container table {
+    width: 100%; 
+}
+
+.form-container table td:nth-child(4)
+ {
+    text-align: center; 
+}
+
+.form-container table tbody tr td:nth-child(3),
+.form-container table tbody tr td:nth-child(5) {
+    text-align: left; 
+}
+
+
+:host {
+    display: block;
+    padding: 10px;
+}
+
+.mat-dialog-content {
+    overflow-y: auto;
+}
+
+.form-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.mat-dialog-actions {
+    margin-top: auto;
+}
+ 

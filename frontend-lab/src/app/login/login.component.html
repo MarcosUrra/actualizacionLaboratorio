@@ -1,0 +1,58 @@
+<div class="container" style="width: 460px; margin-top: 20%;border: 2px solid #ccc;
+border-radius: 10px;
+padding: 20px;">
+  <h1 mat-dialog-title>{{tituloAccion}}</h1>
+  <div mat-dialog-content>
+    <form [formGroup]="formLogin">
+      <mat-grid-list cols="1" rowHeight="100px">
+
+
+        <mat-grid-tile>
+          <mat-form-field appearance="outline">
+            <mat-label>Usuario</mat-label>
+            <input matInput formControlName="username" autocomplete="off"
+              (input)="formLogin.get('username')?.markAsTouched()">
+            <mat-error *ngIf="formLogin.get('username')?.hasError('required')">
+              Ingrese usuario valido.
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input matInput formControlName="password" autocomplete="off" [type]="hidePassword ? 'password' : 'text'"
+              (input)="formLogin.get('password')?.markAsTouched()">
+            <button mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+        
+            <mat-error *ngIf="formLogin.get('password')?.hasError('required')">
+              La contraseña es obligatoria.
+            </mat-error>
+            <mat-error *ngIf="formLogin.get('password')?.hasError('pattern')">
+              Ingrese una contraseña válida.
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </form>
+  </div>
+  <div mat-dialog-actions class="button-container">
+    <button mat-raised-button color="primary" (click)="login()" type="submit"
+      [disabled]="formLogin.invalid">{{botonAccion}}
+    </button>
+
+    <button mat-raised-button color="warn" (click)="borrarCampos()" [disabled]="formLogin.invalid">BORRAR</button>
+    <button mat-raised-button color="warn" (click)="cancelar()">CANCELAR</button>
+
+  </div>
+
+  <div class="Soporte">
+    <a href="mailto:tesislaboratorio@gmail.com" style="text-decoration: none; display: inline; margin-left: 5px;">
+      <span>Soporte Técnico</span>
+    </a>
+  </div>
+
+
+</div>

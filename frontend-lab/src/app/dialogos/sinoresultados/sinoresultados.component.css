@@ -1,0 +1,12 @@
+.mi-dialogo-titulo {
+  color: #fff;
+  background-color: #fca972;
+  padding: 10px;
+  text-align: center;
+}
+
+.mi-dialogo-botones {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}

@@ -1,0 +1,38 @@
+.mat-mdc-form-field{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 14px;
+  width: 100%;
+  margin-bottom: 20px; 
+  margin-top: 20px;
+  padding: 10px 10px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;  
+ margin-top: 30px;
+}
+
+
+
+.mat-raised-button:not(:last-child) {
+  margin-right: 5px;  
+}
+
+.mat-raised-button {
+  border: 2px solid #dcdcdc;
+  margin-top: 15px;  
+  border-radius: 5px; 
+}
+.form-field {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.Soporte {
+  text-align: center;
+  padding: 10px;
+  margin-top: 10px;
+}

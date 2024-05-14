@@ -1,0 +1,49 @@
+.listaMedicos{
+  width: 100%;
+  margin: 10px 5px 10px 5px;
+}
+
+table {
+  width: 100%;
+  background-color: rgb(232, 230, 228);
+}
+
+.encabezado-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.mat-elevation-z8 {
+  max-height: 300px; 
+  overflow: auto; 
+} 
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.encabezado-container h1 {
+  margin-right: 10px; 
+}
+
+.encabezado-container button {
+position: absolute;
+right: 0;
+bottom: 0;
+border: none;
+background-color: #303F9F;
+color: white;
+font-size: 16px;
+display: block;
+margin: 0 auto;
+height: 40px;
+width: 200px;
+padding-bottom: 5px;
+padding-top: 5px;
+ 
+}
+  

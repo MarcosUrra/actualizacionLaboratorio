@@ -1,0 +1,19 @@
+<div class="form-container">
+    <h1 mat-dialog-title>Reporte Diario de Análisis</h1>
+    <div>
+        <form [formGroup]="formReportes">
+            <mat-form-field appearance="outline">
+                <mat-label>Elige una fecha</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="fecha" (input)="formReportes.get('fecha')?.markAsTouched()">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </form>
+    </div>
+
+    <div mat-dialog-actions>
+        <button mat-raised-button color="primary" (click)="imprimirReporteDiario()" class="button-custom-style">ACEPTAR</button>
+        <button mat-raised-button color="warn" (click)="volver()" class="button-custom-style">CANCELAR</button>
+    </div>
+</div>
+

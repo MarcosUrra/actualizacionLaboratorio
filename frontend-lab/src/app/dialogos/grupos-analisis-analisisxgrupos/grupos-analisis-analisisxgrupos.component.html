@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Analisis Seleccionados {{data.grupo.nombreDelGrupo}}</h1>
+<div mat-dialog-content>
+  <ul>
+    <li *ngFor="let analisis of analisisSeleccionados">{{ analisis.nombre }}</li>
+  </ul>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="cerrarDialogo()" color="primary">Cerrar</button>
+</div>
+

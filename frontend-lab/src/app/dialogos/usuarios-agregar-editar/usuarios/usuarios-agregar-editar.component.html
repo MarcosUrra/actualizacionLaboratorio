@@ -1,0 +1,91 @@
+<h1 mat-dialog-title>{{tituloAccion}} USUARIO</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formUsuario">
+    <mat-grid-list cols="1" rowHeight="90px">
+      <mat-grid-tile>
+        <mat-checkbox class="estado"  (change)="actualizarEstado($event.checked)" formControlName="estado" color="primary">Estado Activo</mat-checkbox>
+        <mat-error *ngIf="formUsuario.get('estado')?.hasError('required')">
+          Al crear un nuevo Usuario debe activar el estado.
+        </mat-error>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Apellido</mat-label>
+          <input matInput formControlName="apellido" autocomplete="off"(input)="formUsuario.get('apellido')?.markAsTouched()">   
+          <mat-error *ngIf="formUsuario.get('apellido')?.hasError('pattern')">
+            El apellido debe contener sólo caracteres alfabéticos.
+          </mat-error>
+          <mat-error *ngIf="formUsuario.get('apellido')?.hasError('required')">
+            El apellido es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" autocomplete="off"(input)="formUsuario.get('nombre')?.markAsTouched()">
+          <mat-error *ngIf="formUsuario.get('nombre')?.hasError('required')">
+            El nombre es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="formUsuario.get('nombre')?.hasError('pattern')">
+            El nombre solo debe contener caracteres alfabéticos.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Usuario</mat-label>
+          <input matInput formControlName="username" autocomplete="off"(input)="formUsuario.get('username')?.markAsTouched()">
+          <mat-error *ngIf="formUsuario.get('username')?.hasError('required')">
+            El usuario es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="formUsuario.get('username')?.hasError('minlength')">
+            Minimo de caracteres 3.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input matInput formControlName="password" autocomplete="off" (input)="formUsuario.get('password')?.markAsTouched()">
+          <mat-error *ngIf="formUsuario.get('password')?.hasError('required')">
+            La contraseña es obligatoria.
+          </mat-error>
+          <mat-error *ngIf="formUsuario.get('password')?.hasError('minlength')">
+            Minimo de caracteres 8.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Role</mat-label>
+          <mat-select formControlName="role"(input)="formUsuario.get('role')?.markAsTouched()">
+            <mat-option value="admin">Admin</mat-option>
+            <mat-option value="user">User</mat-option>   
+          </mat-select  >
+          <mat-error *ngIf="formUsuario.get('role')?.hasError('required')">
+            Elegir un tipo de Rol es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      
+
+    </mat-grid-list>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close color="warn">VOLVER</button>
+  <button mat-raised-button color="primary" 
+  (click)="agregarEditarUsuario()"
+  [disabled]="formUsuario.invalid"
+  >{{botonAccion}}
+  </button>
+</div>
+
+

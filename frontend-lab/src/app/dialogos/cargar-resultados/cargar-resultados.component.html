@@ -1,0 +1,39 @@
+
+<div class="form-container">
+    <h1 mat-dialog-title>{{tituloAccion}}</h1>
+    <h1 mat-dialog-title>Número Análisis: {{data.idOrden}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Orden Diaria: {{data.numeroOrdenDiario }}</h1>
+    <div mat-dialog-content>
+        <form [formGroup]="formCargarResultados" (ngSubmit)="guardarResultados()">
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Análisis</th>
+                            <th>Resultado</th>
+                            <th> </th>
+                            <th>Valores Normales</th>
+                            <th> </th>
+                       
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let analisis of listadoAnalisisValores">
+                            <td>{{ analisis.nombre }}</td>
+                            <td>
+                                <input type="text" formControlName="analisis_{{ analisis.id }}" id="resultados"/>
+                            </td>
+                            <td>{{ analisis.unidades }}</td>
+                            <td>{{ analisis.valores }}</td>
+                            <td>{{ analisis.unidades }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button (click)="volver()" color="warn">VOLVER</button>
+        <button mat-raised-button color="primary" (click)="guardarResultados()">GUARDAR RESULTADOS</button>
+    </div>
+
+</div>

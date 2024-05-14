@@ -1,0 +1,112 @@
+<h1 mat-dialog-title>{{tituloAccion}} LABORATORISTA</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formLaboratorista">
+    <mat-grid-list cols="1" rowHeight="90px">
+      <mat-grid-tile>
+        <mat-checkbox class="estado" (change)="actualizarEstado($event.checked)" formControlName="estado" color="primary">Estado Activo</mat-checkbox>
+        <mat-error *ngIf="formLaboratorista.get('estado')?.hasError('required')">
+        Al crear un nuevo Laboratorista debe activar el estado.
+        </mat-error>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Apellido</mat-label>
+          <input matInput formControlName="apellido" autocomplete="off">
+          <mat-error *ngIf="formLaboratorista.get('apellido')?.hasError('required')">
+            El apellido es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="formLaboratorista.get('apellido')?.hasError('pattern')">
+            El apellido solo debe contener caracteres alfabéticos.
+          </mat-error> 
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" autocomplete="off">
+          <mat-error *ngIf="formLaboratorista.get('nombre')?.hasError('required')">
+            El nombre es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="formLaboratorista.get('nombre')?.hasError('pattern')">
+            El nombre solo debe contener caracteres alfabéticos.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Matrícula</mat-label>
+          <input matInput formControlName="matricula" autocomplete="off">
+          <mat-error *ngIf="formLaboratorista.get('matricula')?.hasError('required')">
+            El número de matrícula es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="formLaboratorista.get('matricula')?.hasError('pattern')">
+            El número de matricula solo debe contener caracteres numéricos.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Especialidad</mat-label>
+          <input matInput formControlName="especialidad" autocomplete="off">
+          <mat-error *ngIf="formLaboratorista.get('especialidad')?.hasError('required')">
+            La especialidad es obligatoria.
+          </mat-error>
+          <mat-error *ngIf="formLaboratorista.get('especialidad')?.hasError('pattern')">
+            La especialidad solo debe contener caracteres alfabéticos.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo de Documento</mat-label>
+          <mat-select formControlName="tipoDocumento">
+            <mat-option value="DNI">DNI</mat-option>
+            <mat-option value="Pasaporte">Pasaporte</mat-option>
+            <mat-option value="Otro">Otro</mat-option>
+          </mat-select  >
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Número de Documento</mat-label>
+          <input matInput formControlName="numeroDocumento"autocomplete="off">
+          <mat-error *ngIf="formLaboratorista.get('numeroDocumento')?.hasError('required')">
+            El número de documento es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="formLaboratorista.get('numeroDocumento')?.hasError('pattern')">
+            El número de documento solo debe contener caracteres numéricos.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Teléfono</mat-label>
+          <input matInput formControlName="telefono" autocomplete="off">
+          <mat-error *ngIf="formLaboratorista.get('telefono')?.hasError('required')">
+            El número de teléfono es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="formLaboratorista.get('telefono')?.hasError('pattern')">
+            El número de teléfono solo debe contener car. numéricos.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close color="warn">VOLVER</button>
+  <button mat-raised-button color="primary"
+  (click)="agregarEditarLaboratorista()"
+  [disabled]="formLaboratorista.invalid"
+  >{{botonAccion}}
+  </button>
+</div>
+
+

@@ -1,0 +1,64 @@
+.portada {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+
+.portada img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portada h1 {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 3.5vw;
+  line-height: 1.5;
+  color: white;
+  font-weight: 799;
+  text-shadow: 2px 2px 5px rgb(0, 0, 0);
+  text-align: center;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 800px;
+  min-width: 16px;
+}
+
+.portada button {
+  width: 140px;
+  height: 40px;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #ef8844;
+  color: white;
+  font-size: 16px;
+  border-radius: 1rem;
+  position: absolute;
+  right: 5%;
+  top: 7% !important;
+  box-shadow: 0 2px 4px #fff;
+
+  &:hover {
+    background-color: rgb(238, 97, 37);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .portada h1 {
+    font-size: 5vw;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .portada button {
+    bottom: 87%;
+    left: auto;
+    top: auto;
+  }
+}

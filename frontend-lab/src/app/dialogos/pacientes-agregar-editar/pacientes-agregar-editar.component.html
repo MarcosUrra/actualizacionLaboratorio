@@ -1,0 +1,165 @@
+<h1 mat-dialog-title>{{tituloAccion}} PACIENTE</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formPaciente"> 
+    <mat-grid-list cols="2" rowHeight="90px">
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo De Documento</mat-label>
+          <mat-select formControlName="tipoDocumento">
+            <mat-option value="DNI">DNI</mat-option>
+            <mat-option value="Pasaporte">Pasaporte</mat-option>
+            <mat-option value="Otro">Otro</mat-option>
+          </mat-select  >
+          <mat-error *ngIf="formPaciente.get('tipoDocumento')?.hasError('required')">
+            Elegir un tipo de documento es obligatorio.
+          </mat-error>
+         </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Número de Documento</mat-label>
+          <input matInput formControlName="numeroDocumento" autocomplete="off"(input)="formPaciente.get('numeroDocumento')?.markAsTouched()"> 
+          <mat-error *ngIf="formPaciente.get('numeroDocumento')?.hasError('required')">
+            El número de documento es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="formPaciente.get('numeroDocumento')?.hasError('pattern')">
+            Ingresa un número de documento válido.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-grid-list cols="2" rowHeight="90px">
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Apellido</mat-label>
+          <input matInput formControlName="apellido" autocomplete="off"(input)="formPaciente.get('apellido')?.markAsTouched()">
+          <mat-error *ngIf="formPaciente.get('apellido')?.hasError('pattern')">
+            El apellido debe contener sólo caracteres alfabéticos.
+          </mat-error>
+          <mat-error *ngIf="formPaciente.get('apellido')?.hasError('required')">
+            El apellido es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre Completo</mat-label>
+          <input matInput formControlName="nombre" autocomplete="off"(input)="formPaciente.get('nombre')?.markAsTouched()">
+          <mat-error *ngIf="formPaciente.get('nombre')?.hasError('required')">
+            El nombre es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="formPaciente.get('nombre')?.hasError('pattern')">
+            El nombre solo debe contener caracteres alfabéticos.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-grid-list cols="2" rowHeight="90px">
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+            <mat-label>Fecha De Nacimiento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento" (input)="formPaciente.get('fechaNacimiento')?.markAsTouched()">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="formPaciente.get('fechaNacimiento')?.hasError('required')">
+              La fecha de nacimiento es obligatoria.
+            </mat-error>
+          </mat-form-field>
+
+          <div *ngIf="formPaciente.get('fechaNacimiento') && formPaciente.get('fechaNacimiento')?.value">
+            <mat-form-field appearance="outline">
+              <mat-label style="color: black;">Edad</mat-label>
+              <input matInput [value]="calcularEdad()">
+            </mat-form-field>
+          </div>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Sexo</mat-label>
+          <mat-select formControlName="sexo"(input)="formPaciente.get('sexo')?.markAsTouched()">
+            <mat-option value="Femenino">Femenino</mat-option>
+            <mat-option value="Masculino">Masculino</mat-option>
+          </mat-select>
+          <mat-error *ngIf="formPaciente.get('sexo')?.hasError('required')">
+            Indicar el sexo del paciente es obligatorio.
+          </mat-error>  
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-grid-list cols="3" rowHeight="90px">
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Direccion</mat-label>
+          <input matInput formControlName="direccion" autocomplete="off"(input)="formPaciente.get('direccion')?.markAsTouched()">
+          <mat-error *ngIf="formPaciente.get('direccion')?.hasError('required')">
+            Es dato obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Localidad</mat-label>
+          <input matInput formControlName="localidad" autocomplete="off"(input)="formPaciente.get('localidad')?.markAsTouched()">
+          <mat-error *ngIf="formPaciente.get('localidad')?.hasError('required')">
+            Es dato obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Provincia</mat-label>
+          <input matInput formControlName="provincia" autocomplete="off"(input)="formPaciente.get('provincia')?.markAsTouched()">
+          <mat-error *ngIf="formPaciente.get('provincia')?.hasError('required')">
+            Es dato obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+
+    <mat-grid-list cols="2" rowHeight="90px">
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Teléfono</mat-label>
+          <input matInput formControlName="telefono" autocomplete="off"(input)="formPaciente.get('telefono')?.markAsTouched()">
+          <mat-error *ngIf="formPaciente.get('telefono')?.hasError('pattern')">
+            Ingrese valores numéricos.
+          </mat-error>
+          <mat-error *ngIf="formPaciente.get('telefono')?.hasError('required')">
+            Es dato obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" autocomplete="off"(input)="formPaciente.get('email')?.markAsTouched()">
+          <mat-error *ngIf="formPaciente.get('email')?.hasError('pattern')">
+            El formato del email no es válido.
+          </mat-error>
+          <mat-error *ngIf="formPaciente.get('email')?.hasError('required')">
+            Es dato obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="volver()" color="warn">VOLVER</button>
+  <button mat-raised-button color="primary" 
+  (click)="agregarEditarPaciente()"
+  [disabled]="formPaciente.invalid"
+  >{{botonAccion}}
+  </button>
+</div> 

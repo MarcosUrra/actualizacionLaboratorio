@@ -1,0 +1,65 @@
+<div class="listaAnalisis">
+    <div class="encabezado-container">
+    <h1>Listado de Análisis</h1> <br>
+
+    <button mat-raised-button  color="primary"  (click)="DialogoNuevoAnalisis()"style="border: none;background-color: #3f51b5;color: white; height: 40px; width: 200px;font-size: 16px; ">NUEVO ANÁLISIS</button>
+</div>   
+    <mat-form-field>
+        <mat-label><img src="assets/imagenes/lupa.png" alt="lupa" width="40px" background-color="rgb(232, 230, 228)"></mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Creatinina" #input>
+    </mat-form-field>
+
+    <div class="mat-elevation-z8" >
+        <table mat-table [dataSource]="dataSource">
+    
+
+        <ng-container matColumnDef="Código">
+            <th mat-header-cell *matHeaderCellDef> Código</th>
+            <td mat-cell *matCellDef="let element"> {{element.codigo}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="Nombre">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+    
+
+        <ng-container matColumnDef="Valores Normales">
+            <th mat-header-cell *matHeaderCellDef> Valores Normales </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="multiline-cell">    
+                {{element.valores}} 
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Unidades">
+            <th mat-header-cell *matHeaderCellDef> Unidades </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="multiline-cell">    
+                {{element.unidades}} 
+                </div>
+            </td>
+        </ng-container>
+
+       
+        <ng-container matColumnDef="Acciones">
+            <th mat-header-cell *matHeaderCellDef style="width: 60px;">  </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button   style="border: none; background-color: rgb(232, 230, 228);" (click)="DialogoEditarAnalisis(element)">
+                    <mat-icon color="primary">edit</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                    showFirstLastButtons
+                    aria-label="Items por página">
+        </mat-paginator>
+    </div>
+</div>
+ 

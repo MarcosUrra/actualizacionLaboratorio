@@ -1,0 +1,54 @@
+<div class="listaGrupos">
+    <div class="encabezado-container">
+        <h1>Listado de Grupos de Análisis</h1>
+        <button mat-raised-button (click)="DialogoNuevoGrupo()">NUEVO GRUPO</button><br>
+    </div>
+
+    <mat-form-field>
+        <mat-label><img src="assets/imagenes/lupa.png" alt="lupa" width="30px"
+                background-color="rgb(232, 230, 228)"></mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Hemograma" #input>
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
+
+            <ng-container matColumnDef="nombreDelGrupo">
+                <th mat-header-cell *matHeaderCellDef>Nombre del Grupo</th>
+                <td mat-cell *matCellDef="let element">{{ element.nombreDelGrupo }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="nombreInforme">
+                <th mat-header-cell *matHeaderCellDef>Nombre Informe</th>
+                <td mat-cell *matCellDef="let element">{{ element.nombreInforme }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="listadoAnalisis">
+                <th mat-header-cell *matHeaderCellDef>Listado Análisis</th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-button (click)="verAnalisis(element.id)"
+                        style="border: none; background-color: rgb(232, 230, 228);">
+                        <mat-icon>visibility</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Acciones">
+                <th mat-header-cell *matHeaderCellDef style="width: 60px;"> </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button (click)="DialogoEditarGrupo(element)"
+                        style="border: none; background-color: rgb(232, 230, 228);">
+                        <mat-icon color="primary">edit</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Items por página">
+        </mat-paginator>
+    </div>
+</div>

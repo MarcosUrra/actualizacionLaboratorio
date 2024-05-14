@@ -1,0 +1,46 @@
+<h1 mat-dialog-title>{{tituloAccion}} GRUPO DE ANÁLISIS</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formGrupo"> 
+    <mat-grid-list cols="1" rowHeight="90px">
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre Del Grupo</mat-label>
+          <input matInput formControlName="nombreDelGrupo" autocomplete="off"(input)="formGrupo.get('nombreDelGrupo')?.markAsTouched()">  
+          <mat-error *ngIf="formGrupo.get('nombreDelGrupo')?.hasError('required')">
+            El nombre del grupo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre Informe</mat-label>
+          <input matInput formControlName="nombreInforme" autocomplete="off"(input)="formGrupo.get('nombreInforme')?.markAsTouched()">  
+        </mat-form-field>
+      </mat-grid-tile>
+      
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" rowHeight="120px"class="second-form-field">
+          <mat-label>Listado de Análisis</mat-label>
+          <mat-select [formControl]="listadoAnalisisControl" multiple>
+            <mat-option *ngFor="let analisis of listadoAnalisisValores" [value]="analisis.id">
+              {{analisis.nombre}}
+            </mat-option>
+          </mat-select>
+          <!-- Agregar una caja de búsqueda -->
+          <input matInput placeholder="Buscar análisis" (input)="filtrarAnalisis()"> 
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="volver()"  color="warn">VOLVER</button>
+  <button mat-raised-button color="primary"
+  (click)="agregarEditarGrupo()"
+  [disabled]="formGrupo.invalid"
+  >{{botonAccion}}
+  </button>
+</div>

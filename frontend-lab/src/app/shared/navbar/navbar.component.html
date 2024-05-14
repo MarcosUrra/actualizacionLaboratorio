@@ -1,0 +1,23 @@
+<div class="navbar" *ngIf="!hidden">
+  <img src="assets/imagenes/logomuni.png" alt="logo" width="140px" height="50px"
+    style="margin-right:20px; padding-bottom: 5px">
+
+  <a href="/inicio" class="navbar-link">Inicio</a>
+  <a href="/nueva-orden" class="navbar-link">Ordenes</a>
+  <button mat-button (click)="GenerarReporteDiario()">Reportes</button>
+
+  <mat-menu #menu="matMenu" class="menu-custom-style">
+
+    <button mat-menu-item routerLink="/analisis" class="menu-item-custom-style">Análisis</button>
+    <button mat-menu-item routerLink="/grupos-analisis" class="menu-item-custom-style">Grupos de Análisis</button>
+    <button mat-menu-item routerLink="/laboratoristas" class="menu-item-custom-style">Laboratoristas</button>
+    <button mat-menu-item routerLink="/medicos" class="menu-item-custom-style">Médicos</button>
+    <button mat-menu-item routerLink="/pacientes" class="menu-item-custom-style">Pacientes</button>
+    <button mat-menu-item routerLink="/usuarios" *ngIf="loginService.getRole()=='admin'"
+      class="menu-item-custom-style">Usuarios</button>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="menu" id="registroButton" class="registro-button">Registro</button>
+
+  <button mat-button (click)="clearRole()">Cerrar Sesión</button>
+
+</div>

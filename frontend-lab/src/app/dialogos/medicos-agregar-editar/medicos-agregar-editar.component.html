@@ -1,0 +1,105 @@
+<h1 mat-dialog-title>{{tituloAccion}} MEDICO</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formMedico">
+    <mat-grid-list cols="1" rowHeight="90px">
+      <mat-grid-tile>
+        <mat-checkbox class="estado" (change)="actualizarEstado($event.checked)" formControlName="estado" color="primary">Estado Activo</mat-checkbox>
+        <mat-error *ngIf="formMedico.get('estado')?.hasError('required')">
+        Al crear un nuevo Médico debe activar el estado.
+        </mat-error>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Apellido</mat-label>
+          <input matInput formControlName="apellido" autocomplete="off"(input)="formMedico.get('apellido')?.markAsTouched()">
+          <mat-error *ngIf="formMedico.get('apellido')?.hasError('pattern')">
+            El apellido debe contener sólo caracteres alfabéticos.
+          </mat-error>
+          <mat-error *ngIf="formMedico.get('apellido')?.hasError('required')">
+            El apellido es obligatorio.
+          </mat-error>  
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" autocomplete="off"(input)="formMedico.get('nombre')?.markAsTouched()">
+          <mat-error *ngIf="formMedico.get('nombre')?.hasError('pattern')">
+            El nombre solo debe contener caracteres alfabéticos.
+          </mat-error>
+          <!-- <mat-error *ngIf="formMedico.get('nombre')?.hasError('required')">
+            El nombre es obligatorio.
+          </mat-error> -->
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Matrícula</mat-label>
+          <input matInput formControlName="matricula" autocomplete="off"(input)="formMedico.get('matricula')?.markAsTouched()">
+          <mat-error *ngIf="formMedico.get('matricula')?.hasError('required')">
+            La mátricula es obligatoria.
+          </mat-error>
+          <mat-error *ngIf="formMedico.get('matricula')?.hasError('pattern')">
+            La matrícula solo debe contener caracteres numéricos.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Especialidad</mat-label>
+          <input matInput formControlName="especialidad" autocomplete="off"(input)="formMedico.get('especialidad')?.markAsTouched()">
+          <mat-error *ngIf="formMedico.get('especialidad')?.hasError('required')">
+            La especialidad es obligatoria.
+          </mat-error>
+          <mat-error *ngIf="formMedico.get('especialidad')?.hasError('pattern')">
+            La especialidad solo debe contener caracteres alfabéticos.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo de Documento</mat-label>
+          <mat-select formControlName="tipoDocumento">
+            <mat-option value="DNI">DNI</mat-option>
+            <mat-option value="Pasaporte">Pasaporte</mat-option>
+            <mat-option value="Otro">Otro</mat-option>
+          </mat-select>
+         </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Número de Documento</mat-label>
+          <input matInput formControlName="numeroDocumento"autocomplete="off"(input)="formMedico.get('numeroDocumento')?.markAsTouched()">
+          <mat-error *ngIf="formMedico.get('numeroDocumento')?.hasError('pattern')">
+            Ingrese valores numéricos.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Teléfono</mat-label>
+          <input matInput formControlName="telefono" autocomplete="off"(input)="formMedico.get('telefono')?.markAsTouched()">
+          <mat-error *ngIf="formMedico.get('telefono')?.hasError('pattern')">
+            Ingrese valores numéricos.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close color="warn">VOLVER</button>
+  <button mat-raised-button color="primary"
+  (click)="agregarEditarMedico()"
+  [disabled]="formMedico.invalid"
+  >{{botonAccion}}
+  </button>
+</div>
+
