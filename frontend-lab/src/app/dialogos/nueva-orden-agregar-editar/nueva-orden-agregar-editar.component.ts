@@ -214,7 +214,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
   }
 
   obtenerListadoLaboratoristas() {
-    this.http.get<Laboratoristas[]>('http://10.10.0.79:3000/laboratoristas/listadoLaboratoristas')
+    this.http.get<Laboratoristas[]>('http://10.10.0.79:300/laboratoristas/listadoLaboratoristas')
       .pipe(
         map(laboratoristas => laboratoristas.filter(laboratorista => laboratorista.estado === true)),
         tap(laboratoristas => {
