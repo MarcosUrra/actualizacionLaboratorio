@@ -166,7 +166,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
   }
 
   obtenerListadoMedicos() {
-    this.http.get<Medicos[]>('http://localhost:3000/medicos/listadoMedicos')
+    this.http.get<Medicos[]>('http://10.10.0.79:3000/medicos/listadoMedicos')
       .pipe(
         map(medicos => medicos.filter(medico => medico.estado === true)),
         tap(medicos => {
@@ -187,7 +187,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
   }
 
   obtenerDatosPaciente(numeroDocumento: string) {
-    this.http.get<Pacientes>(`http://localhost:3000/pacientes/obtenerPacientePorDni/${numeroDocumento}`)
+    this.http.get<Pacientes>(`http://10.10.0.79:3000/pacientes/obtenerPacientePorDni/${numeroDocumento}`)
       .subscribe(paciente => {
         if (paciente && this.dataNuevaOrden == null) { 
           this.idPaciente = paciente.id;
@@ -214,7 +214,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
   }
 
   obtenerListadoLaboratoristas() {
-    this.http.get<Laboratoristas[]>('http://localhost:3000/laboratoristas/listadoLaboratoristas')
+    this.http.get<Laboratoristas[]>('http://10.10.0.79:3000/laboratoristas/listadoLaboratoristas')
       .pipe(
         map(laboratoristas => laboratoristas.filter(laboratorista => laboratorista.estado === true)),
         tap(laboratoristas => {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { NuevaOrden } from '../interfaces/nueva-orden';
+import { environment } from 'src/environments/environment.development';
 
 
 @Injectable({
@@ -10,20 +11,18 @@ import { NuevaOrden } from '../interfaces/nueva-orden';
 export class NuevaOrdenService {
 
 
-  private baseUrl = 'http://localhost:3000';
-
   constructor(private http: HttpClient) { }
 
   crearNuevaOrden(unaNuevaOrden: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/nueva-orden/CrearOrden`, unaNuevaOrden);
+    return this.http.post(`${environment.baseUrl}/nueva-orden/CrearOrden`, unaNuevaOrden);
   }
 
 
   ObtenerOrdenes(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/nueva-orden/ObtenerOrdenes`);
+    return this.http.get(`${environment.baseUrl}/nueva-orden/ObtenerOrdenes`);
   }
   ObtenerOrdenesPorFecha(fechaDesde: string, fechaHasta: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/nueva-orden/ObtenerOrdenesPorFecha?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}`);
+    return this.http.get(`${environment.baseUrl}/nueva-orden/ObtenerOrdenesPorFecha?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}`);
   }
   filtrado(filtros: any): Observable<any> {
     let fechaDesde = filtros.fechaDesde;
@@ -32,41 +31,41 @@ export class NuevaOrdenService {
     let nroOrden = filtros.nroOrden
     let numeroDocumento = filtros.numeroDocumento
     let nombreCompleto = filtros.nombreCompleto
-    return this.http.get(`${this.baseUrl}/nueva-orden/filtrado?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}&analisis=${analisis}&nroOrden=${nroOrden}&numeroDocumento=${numeroDocumento}&nombreCompleto=${nombreCompleto}`);
+    return this.http.get(`${environment.baseUrl}/nueva-orden/filtrado?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}&analisis=${analisis}&nroOrden=${nroOrden}&numeroDocumento=${numeroDocumento}&nombreCompleto=${nombreCompleto}`);
   }
 
 
   obtenerUnaNuevaOrden(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/nueva-orden/${id}`);
+    return this.http.get(`${environment.baseUrl}/nueva-orden/${id}`);
   }
 
 
   obtenerListadoAnalisis(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/analisis/obtenerListadoAnalisis`);
+    return this.http.get(`${environment.baseUrl}/analisis/obtenerListadoAnalisis`);
   }
 
 
   obtenerListadoGruposAnalisis(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/grupos_analisis/obtenerListadoGruposDeAnalisis`);
+    return this.http.get(`${environment.baseUrl}/grupos_analisis/obtenerListadoGruposDeAnalisis`);
   }
 
   modificarOrden(id: number, nuevaOrden: NuevaOrden): Observable<any> {
-    return this.http.patch(`${this.baseUrl}/nueva-orden/${id}`, nuevaOrden);
+    return this.http.patch(`${environment.baseUrl}/nueva-orden/${id}`, nuevaOrden);
   }
 
 
   obtenerUnAnalisis(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/analisis/obtenerAnalisis/${id}`);
+    return this.http.get(`${environment.baseUrl}/analisis/obtenerAnalisis/${id}`);
   }
 
 
   obtenerResultadosPorOrden(idOrden: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/resultados/obtenerResultados/${idOrden}`);
+    return this.http.get(`${environment.baseUrl}/resultados/obtenerResultados/${idOrden}`);
   }
 
 
   guardarResultados(idOrden: number, resultados: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/resultados/nuevoResultado/${idOrden}`, resultados)
+    return this.http.post(`${environment.baseUrl}/resultados/nuevoResultado/${idOrden}`, resultados)
       .pipe(
         catchError(error => {
           console.error('Error en la solicitud:', error);
@@ -77,20 +76,20 @@ export class NuevaOrdenService {
 
 
   eliminarResultado(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/resultados/eliminarResultadoPorId/${id}`);
+    return this.http.delete(`${environment.baseUrl}/resultados/eliminarResultadoPorId/${id}`);
   }
 
 
   modificarResultado(id: number, nuevoResultado: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/resultados/actualizarResultadoPorId/${id}`, { nuevoResultado });
+    return this.http.put(`${environment.baseUrl}/resultados/actualizarResultadoPorId/${id}`, { nuevoResultado });
   }
 
   actualizarEstadoOrden(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/nueva-orden/impresa/${id}`);
+    return this.http.get(`${environment.baseUrl}/nueva-orden/impresa/${id}`);
   }
 
   // obtenerOrdenesReporteDiario(fecha: string): Observable<any[]> {
-  //   const url = `${this.baseUrl}/nueva-orden/ObtenerOrdenesReporteDiario?fecha=${fecha}`;
+  //   const url = `${environment.baseUrl}/nueva-orden/ObtenerOrdenesReporteDiario?fecha=${fecha}`;
   //   return this.http.get<any[]>(url);
   // }
   obtenerOrdenesReporteDiario(fecha: string): Observable<any> {
@@ -100,7 +99,7 @@ export class NuevaOrdenService {
     let nroOrden = ""
     let numeroDocumento = ""
     let nombreCompleto = ""
-    return this.http.get(`${this.baseUrl}/nueva-orden/filtrado?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}&analisis=${analisis}&nroOrden=${nroOrden}&numeroDocumento=${numeroDocumento}&nombreCompleto=${nombreCompleto}`);
+    return this.http.get(`${environment.baseUrl}/nueva-orden/filtrado?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}&analisis=${analisis}&nroOrden=${nroOrden}&numeroDocumento=${numeroDocumento}&nombreCompleto=${nombreCompleto}`);
   }
 
 }

@@ -13,6 +13,8 @@ import { GruposAnalisisComponent } from './grupos-analisis/grupos-analisis.compo
 import { NuevaOrdenComponent } from './nueva-orden/nueva-orden.component';
 import { authGuard, authGuardUsuario } from './shared/services/autenticacion.service';
 import { ManualUsuarioComponent } from './shared/manual-usuario/manual-usuario.component';
+import { solicitadoPorComponent } from './solicitado-por/solicitado-por.component';
+
 
 const routes: Routes = [
 
@@ -27,7 +29,8 @@ const routes: Routes = [
   {path:'nueva-orden', component:NuevaOrdenComponent, canActivate: [authGuard]},
   {path: 'laboratoristas', component: LaboratoristasComponent, canActivate: [authGuard]},
   {path: 'grupos-analisis', component: GruposAnalisisComponent, canActivate: [authGuard]},
-  {path: 'manual-usuario', component: ManualUsuarioComponent, canActivate: [authGuard]}
+  {path: 'manual-usuario', component: ManualUsuarioComponent, canActivate: [authGuard]},
+  {path: 'solicitado-por', component: solicitadoPorComponent, canActivate: [authGuard]},
 ];
 
 @NgModule({

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -9,21 +10,20 @@ export class UsuariosService {
   dialogoEliminarUsuario(usuario: Observable<any>) {
     throw new Error('Method not implemented.');
   }
-  private baseUrl = 'http://localhost:3000';
-
+ 
 
   constructor(private http: HttpClient) { }
 
   crearUsuario(nuevoUsuario: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/usuarios/createUsuario`, nuevoUsuario);
+    return this.http.post(`${environment.baseUrl}/usuarios/createUsuario`, nuevoUsuario);
   }
 
   obtenerListadoUsuarios(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/usuarios`);
+    return this.http.get(`${environment.baseUrl}/usuarios`);
   }
 
   obtenerUsuario(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/usuarios/id/${id}`);
+    return this.http.get(`${environment.baseUrl}/usuarios/id/${id}`);
   }
 
   eliminarUsuarioPorId(id: number, usuario: any): Observable<any> {
@@ -34,15 +34,15 @@ export class UsuariosService {
       body: usuario
     };
 
-    return this.http.delete(`${this.baseUrl}/usuarios/${id}`, options);
+    return this.http.delete(`${environment.baseUrl}/usuarios/${id}`, options);
   }
 
   modificarUsuario(id: number, username: any): Observable<any> {
-    return this.http.patch(`${this.baseUrl}/usuarios/${id}`, username);
+    return this.http.patch(`${environment.baseUrl}/usuarios/${id}`, username);
   }
 
 
   verificarUsernameExistente(username: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.baseUrl}/verificar-username/${username}`);
+    return this.http.get<boolean>(`${environment.baseUrl}/verificar-username/${username}`);
   }
 }

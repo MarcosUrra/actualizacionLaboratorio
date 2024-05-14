@@ -49,6 +49,8 @@ import { SiNoResultadosComponent } from './dialogos/sinoresultados/sinoresultado
 import { ManualUsuarioComponent } from './shared/manual-usuario/manual-usuario.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReportesComponent } from './dialogos/reportes/reportes.component';
+import { solicitadoPorComponent } from './solicitado-por/solicitado-por.component';
+import { solicitadoPorAgregarEditarComponent } from './dialogos/solicitado-por-agregar-editar/solicitado-por-agregar-editar.component';
 
 
 @NgModule({
@@ -71,7 +73,8 @@ import { ReportesComponent } from './dialogos/reportes/reportes.component';
     PopUpColumnasComponent,
     SiNoResultadosComponent,
     ManualUsuarioComponent,
-    ReportesComponent
+    ReportesComponent,
+    solicitadoPorAgregarEditarComponent,
     
     
   ],
@@ -110,6 +113,7 @@ import { ReportesComponent } from './dialogos/reportes/reportes.component';
     BrowserModule,
     DragDropModule,
     MatCheckboxModule,
+    solicitadoPorComponent,
     
     
   ],

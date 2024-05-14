@@ -120,7 +120,7 @@ export class PacientesAgregarEditarComponent implements OnInit{
       localidad:this.formPaciente.value.localidad,
       provincia:this.formPaciente.value.provincia,
       telefono:this.formPaciente.value.telefono,
-      email:this.formPaciente.value.email
+      email:this.formPaciente.value.email.toLowerCase()
     }
     if(this.dataPaciente==null){
       this.pacientesService.crearPaciente(modelo).subscribe({

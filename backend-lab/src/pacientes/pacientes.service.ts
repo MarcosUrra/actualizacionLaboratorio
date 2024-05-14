@@ -84,6 +84,8 @@ export class PacientesService {
             throw new HttpException(errorMessage, HttpStatus.BAD_REQUEST);
         }
 
+        nuevoPaciente.email = nuevoPaciente.email.toLowerCase();
+
         return this.pacienteRepository.save(nuevoPaciente);
     }
  
@@ -92,6 +94,8 @@ export class PacientesService {
         try {
             let pacienteAntiguo: any = await this.obtenerPacientePorId(id);
             pacienteAntiguo = informacionNueva;
+
+            pacienteAntiguo.email = pacienteAntiguo.email.toLowerCase();
 
             return await this.pacienteRepository
                 .save(pacienteAntiguo)

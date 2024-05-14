@@ -11,10 +11,11 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 import { NuevaOrdenModule } from './nueva-orden/nueva-orden.module';
 import { LaboratoristasModule } from './laboratoristas/laboratoristas.module';
 import { ResultadosModule } from './resultados/resultados.module';
+import { SolicitadoPorModule } from './solicitado-por/solicitado-por.module';
 
 @Module({
   imports: [
-     PacientesModule, AnalisisModule, MedicosModule, GruposAnalisisModule, UsuariosModule, NuevaOrdenModule,LaboratoristasModule,ResultadosModule, 
+     PacientesModule, AnalisisModule, MedicosModule, GruposAnalisisModule, UsuariosModule, NuevaOrdenModule,LaboratoristasModule,ResultadosModule, SolicitadoPorModule, 
  
      TypeOrmModule.forRoot({
       type: 'mysql',
@@ -25,7 +26,7 @@ import { ResultadosModule } from './resultados/resultados.module';
       database: 'laboratoriohospital',
       entities: [join(__dirname, '**', '*.entity.{ts,js}')],
       synchronize: true,
-    }),
+    }), 
     ],
 
   controllers: [AppController],
