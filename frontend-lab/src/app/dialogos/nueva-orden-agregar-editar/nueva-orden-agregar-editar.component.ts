@@ -123,6 +123,8 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
     });
     this.obtenerListadoLaboratoristas();
     this.obtenerListadoMedicos();
+  
+    
     if (this.dataNuevaOrden !== null) {
       console.log(this.dataNuevaOrden)
       this.formNuevaOrden.patchValue({

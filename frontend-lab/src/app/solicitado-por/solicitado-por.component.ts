@@ -21,7 +21,7 @@ import { ImpresionService } from '../shared/services/impresion.service';
 })
 
 export class solicitadoPorComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['Estado','Nombre area', 'Dirección', 'Provincia', 'Provincia', 'Ciudad', 'Teléfono', 'Acciones'];
+  displayedColumns: string[] = ['Estado','nombreArea', 'Dirección', 'Provincia', 'Ciudad', 'Teléfono', 'Acciones'];
   dataSource = new MatTableDataSource<solicitadoPor>();
 
   constructor(
