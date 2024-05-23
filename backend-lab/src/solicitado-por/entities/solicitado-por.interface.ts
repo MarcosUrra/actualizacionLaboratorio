@@ -1,6 +1,5 @@
-
 export interface solicitadoPor {
-    id: number;
-    nombreArea: string;
-    estado: boolean;
+  id: number;
+  nombreArea: string;
+  estado: boolean;
 }

@@ -1,11 +1,19 @@
-import { AnalisisEntity } from "src/analisis/entities/analisis.entity";
-import { GruposAnalisisEntity } from "src/grupos de analisis/entities/grupos_analisis.entity";
-import { LaboratoristasEntity } from "src/laboratoristas/entities/laboratoristas.entity";
-import { MedicosEntity } from "src/medicos/entities/medicos.entity";
-import { PacientesEntity } from "src/pacientes/entities/pacientes.entity";
-import { ResultadosEntity } from "src/resultados/resultados.entity";
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-
+import { AnalisisEntity } from 'src/analisis/entities/analisis.entity';
+import { GruposAnalisisEntity } from 'src/grupos de analisis/entities/grupos_analisis.entity';
+import { LaboratoristasEntity } from 'src/laboratoristas/entities/laboratoristas.entity';
+import { MedicosEntity } from 'src/medicos/entities/medicos.entity';
+import { PacientesEntity } from 'src/pacientes/entities/pacientes.entity';
+import { ResultadosEntity } from 'src/resultados/resultados.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('ordenes_de_trabajo')
 export class NuevaOrden {
@@ -26,21 +34,28 @@ export class NuevaOrden {
   @Column()
   obraSocial: string;
 
-  @ManyToOne(() => PacientesEntity, paciente => paciente.ordenes, { cascade: true })
+  @ManyToOne(() => PacientesEntity, (paciente) => paciente.ordenes, {
+    cascade: true,
+  })
   @JoinColumn({ name: 'paciente_id' })
   paciente: PacientesEntity;
 
-  @ManyToOne(() => MedicosEntity, medicos => medicos.ordenes, { cascade: true })
+  @ManyToOne(() => MedicosEntity, (medicos) => medicos.ordenes, {
+    cascade: true,
+  })
   @JoinColumn({ name: 'medicos_id' })
   medicos: MedicosEntity;
 
-  @ManyToOne(() => LaboratoristasEntity, laboratorista => laboratorista.ordenes, { cascade: true })
+  @ManyToOne(
+    () => LaboratoristasEntity,
+    (laboratorista) => laboratorista.ordenes,
+    { cascade: true },
+  )
   @JoinColumn({ name: 'laboratorista_id' })
   laboratorista: LaboratoristasEntity;
 
   @Column()
   solicitadoPor: string;
-
 
   @ManyToMany(() => AnalisisEntity, { cascade: true })
   @JoinTable({
@@ -54,11 +69,14 @@ export class NuevaOrden {
   @JoinTable({
     name: 'orden_grupo_analisis',
     joinColumn: { name: 'orden_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'grupo_analisis_id', referencedColumnName: 'id' },
+    inverseJoinColumn: {
+      name: 'grupo_analisis_id',
+      referencedColumnName: 'id',
+    },
   })
   grupos_analisis: GruposAnalisisEntity[];
 
-  @OneToMany(() => ResultadosEntity, resultados => resultados.orden)
+  @OneToMany(() => ResultadosEntity, (resultados) => resultados.orden)
   resultados: ResultadosEntity[];
 
   @Column()
@@ -73,6 +91,5 @@ export class NuevaOrden {
   analisisIds: any;
   grupo_analisisIds: any;
 
-  constructor() { }
-
+  constructor() {}
 }

@@ -1,12 +1,16 @@
-<h1 mat-dialog-title>{{tituloAccion}} ANÁLISIS</h1>
+<!-- <h1 mat-dialog-title>{{ tituloAccion }} ANÁLISIS</h1>
 <div mat-dialog-content>
   <form [formGroup]="formAnalisis">
     <mat-grid-list cols="1" rowHeight="90px">
-
       <mat-grid-tile>
         <mat-form-field appearance="outline">
           <mat-label>Código</mat-label>
-          <input matInput formControlName="codigo" autocomplete="off" (input)="formAnalisis.get('codigo')?.markAsTouched()">
+          <input
+            matInput
+            formControlName="codigo"
+            autocomplete="off"
+            (input)="formAnalisis.get('codigo')?.markAsTouched()"
+          />
           <mat-error *ngIf="formAnalisis.get('codigo')?.hasError('required')">
             El codigo es obligatorio.
           </mat-error>
@@ -16,10 +20,24 @@
         </mat-form-field>
       </mat-grid-tile>
 
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Subcategoría</mat-label>
+        <input
+          matInput
+          formControlName="subcategoria"
+          placeholder="Ingrese la subcategoría (opcional)"
+        />
+      </mat-form-field>
+
       <mat-grid-tile>
         <mat-form-field appearance="outline">
           <mat-label>Nombre Análisis</mat-label>
-          <input matInput formControlName="nombre" autocomplete="off" (input)="formAnalisis.get('nombre')?.markAsTouched()">
+          <input
+            matInput
+            formControlName="nombre"
+            autocomplete="off"
+            (input)="formAnalisis.get('nombre')?.markAsTouched()"
+          />
           <mat-error *ngIf="formAnalisis.get('nombre')?.hasError('required')">
             El nombre es obligatorio.
           </mat-error>
@@ -29,13 +47,17 @@
         </mat-form-field>
       </mat-grid-tile>
 
-
       <mat-grid-tile>
-        <mat-form-field appearance="outline"class="second-form-field">
+        <mat-form-field appearance="outline" class="second-form-field">
           <mat-label>Valores Normales</mat-label>
-          <textarea matInput formControlName="valores" autocomplete="off" rows="2" 
-                    (input)="formAnalisis.get('valores')?.markAsTouched()">
-          </textarea>       
+          <textarea
+            matInput
+            formControlName="valores"
+            autocomplete="off"
+            rows="2"
+            (input)="formAnalisis.get('valores')?.markAsTouched()"
+          >
+          </textarea>
           <mat-error *ngIf="formAnalisis.get('valores')?.hasError('required')">
             Este campo es obligatorio.
           </mat-error>
@@ -45,20 +67,124 @@
       <mat-grid-tile>
         <mat-form-field appearance="outline">
           <mat-label>Unidades</mat-label>
-          <input matInput formControlName="unidades" autocomplete="off" (input)="formAnalisis.get('unidades')?.markAsTouched()">
+          <input
+            matInput
+            formControlName="unidades"
+            autocomplete="off"
+            (input)="formAnalisis.get('unidades')?.markAsTouched()"
+          />
         </mat-form-field>
       </mat-grid-tile>
-
     </mat-grid-list>
   </form>
 </div>
 <div mat-dialog-actions>
   <button mat-raised-button mat-dialog-close color="warn">VOLVER</button>
-  <button mat-raised-button color="primary"
-  (click)="agregarEditarAnalisis()"
-  [disabled]="formAnalisis.invalid"
-  >{{botonAccion}}
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="agregarEditarAnalisis()"
+    [disabled]="formAnalisis.invalid"
+  >
+    {{ botonAccion }}
+  </button>
+</div> -->
+<!-- ========================================================== -->
+
+<h1 mat-dialog-title>{{ tituloAccion }} ANÁLISIS</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formAnalisis">
+    <mat-grid-list cols="1" rowHeight="90px">
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Código</mat-label>
+          <input
+            matInput
+            formControlName="codigo"
+            autocomplete="off"
+            (input)="formAnalisis.get('codigo')?.markAsTouched()"
+          />
+          <mat-error *ngIf="formAnalisis.get('codigo')?.hasError('required')">
+            El código es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="formAnalisis.get('codigo')?.hasError('pattern')">
+            Ingresa un número de código válido.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre Análisis</mat-label>
+          <input
+            matInput
+            formControlName="nombre"
+            autocomplete="off"
+            (input)="formAnalisis.get('nombre')?.markAsTouched()"
+          />
+          <mat-error *ngIf="formAnalisis.get('nombre')?.hasError('required')">
+            El nombre es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="formAnalisis.get('nombre')?.hasError('pattern')">
+            El nombre solo debe contener caracteres alfabéticos.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Subcategoría</mat-label>
+          <input
+            matInput
+            formControlName="subcategoria"
+            placeholder="Ingrese la subcategoría (opcional)"
+          />
+          <mat-error
+            *ngIf="formAnalisis.get('subcategoria')?.hasError('required')"
+          >
+            La subcategoría es obligatoria.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline" class="second-form-field">
+          <mat-label>Valores Normales</mat-label>
+          <textarea
+            matInput
+            formControlName="valores"
+            autocomplete="off"
+            rows="2"
+            (input)="formAnalisis.get('valores')?.markAsTouched()"
+          ></textarea>
+          <mat-error *ngIf="formAnalisis.get('valores')?.hasError('required')">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Unidades</mat-label>
+          <input
+            matInput
+            formControlName="unidades"
+            autocomplete="off"
+            (input)="formAnalisis.get('unidades')?.markAsTouched()"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close color="warn">VOLVER</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="agregarEditarAnalisis()"
+    [disabled]="formAnalisis.invalid"
+  >
+    {{ botonAccion }}
   </button>
 </div>
-
-

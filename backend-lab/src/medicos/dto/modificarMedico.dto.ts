@@ -1,3 +1,3 @@
 export class modificarMedicoDto {
-    id: number
+  id: number;
 }

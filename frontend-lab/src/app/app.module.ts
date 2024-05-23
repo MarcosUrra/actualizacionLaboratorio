@@ -1,33 +1,33 @@
-import {NgModule } from '@angular/core';
-import {BrowserModule } from '@angular/platform-browser';
-import {AppRoutingModule } from './app-routing.module';
-import {AppComponent } from './app.component';
-import {HttpClientModule } from '@angular/common/http';
-import {PortadaComponent } from './portada/portada.component';
-import {FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {FooterComponent } from './shared/footer/footer.component';
-import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
-import {LoginComponent } from './login/login.component';
-import {BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatTableModule} from '@angular/material/table';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatButtonModule} from '@angular/material/button';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatCommonModule} from '@angular/material/core';
-import {MomentDateModule } from '@angular/material-moment-adapter';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {PacientesAgregarEditarComponent } from './dialogos/pacientes-agregar-editar/pacientes-agregar-editar.component';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+import { PortadaComponent } from './portada/portada.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FooterComponent } from './shared/footer/footer.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { LoginComponent } from './login/login.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCommonModule } from '@angular/material/core';
+import { MomentDateModule } from '@angular/material-moment-adapter';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { PacientesAgregarEditarComponent } from './dialogos/pacientes-agregar-editar/pacientes-agregar-editar.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { AnalisisAgregarEditarComponent } from './dialogos/analisis-agregar-editar/analisis-agregar-editar.component';
 import { MatMenuModule } from '@angular/material/menu';
-import {MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MedicosAgregarEditarComponent } from './dialogos/medicos-agregar-editar/medicos-agregar-editar.component';
 import { AnalisisComponent } from './analisis/analisis.component';
 import { UsuariosAgregarEditarComponent } from './dialogos/usuarios-agregar-editar/usuarios/usuarios-agregar-editar.component';
@@ -51,8 +51,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReportesComponent } from './dialogos/reportes/reportes.component';
 import { solicitadoPorComponent } from './solicitado-por/solicitado-por.component';
 import { solicitadoPorAgregarEditarComponent } from './dialogos/solicitado-por-agregar-editar/solicitado-por-agregar-editar.component';
-
-
+import { MatChipsModule } from '@angular/material/chips';
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,11 +74,10 @@ import { solicitadoPorAgregarEditarComponent } from './dialogos/solicitado-por-a
     ManualUsuarioComponent,
     ReportesComponent,
     solicitadoPorAgregarEditarComponent,
-    
-    
+    //AnalisisComponent,
   ],
-  
-  imports: [ 
+
+  imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -90,7 +88,7 @@ import { solicitadoPorAgregarEditarComponent } from './dialogos/solicitado-por-a
     BsDatepickerModule.forRoot(),
     MatButtonModule,
     MatTableModule,
-    MatPaginatorModule,    
+    MatPaginatorModule,
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
@@ -114,17 +112,10 @@ import { solicitadoPorAgregarEditarComponent } from './dialogos/solicitado-por-a
     DragDropModule,
     MatCheckboxModule,
     solicitadoPorComponent,
-    
-    
+    MatChipsModule,
   ],
 
   providers: [DatePipe],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
-
-
-
-
-
-
+export class AppModule {}

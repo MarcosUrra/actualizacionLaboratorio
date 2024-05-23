@@ -1,4 +1,9 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { ResultadosEntity } from './resultados.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -6,10 +11,11 @@ import { validate } from 'class-validator';
 
 @Injectable()
 export class ResultadosService {
-  constructor(@InjectRepository(ResultadosEntity)
-  private resultadoRepository: Repository<ResultadosEntity>
-  ) { }
-  
+  constructor(
+    @InjectRepository(ResultadosEntity)
+    private resultadoRepository: Repository<ResultadosEntity>,
+  ) {}
+
   async nuevoResultado(data: any, id: number): Promise<any> {
     for (const element of data.analisis) {
       const resultado = new ResultadosEntity();
@@ -19,10 +25,7 @@ export class ResultadosService {
 
       const errors = await validate(resultado);
       if (errors.length > 0) {
-        throw new HttpException(
-          'Invalid request',
-          HttpStatus.BAD_REQUEST,
-        );
+        throw new HttpException('Invalid request', HttpStatus.BAD_REQUEST);
       }
       try {
         await this.resultadoRepository.save(resultado);
@@ -34,8 +37,10 @@ export class ResultadosService {
       }
     }
   }
-    
-  async obtenerResultadosPorOrden(idOrden: number): Promise<ResultadosEntity[]> {
+
+  async obtenerResultadosPorOrden(
+    idOrden: number,
+  ): Promise<ResultadosEntity[]> {
     const resultados = await this.resultadoRepository.find({
       where: {
         id_orden: idOrden,
@@ -43,36 +48,38 @@ export class ResultadosService {
     });
 
     if (resultados.length === 0) {
-      throw new HttpException(
-        'No results found',
-        HttpStatus.NOT_FOUND,
-      );
+      throw new HttpException('No results found', HttpStatus.NOT_FOUND);
     }
     return resultados;
   }
 
-
- async obtenerResultadoPorId(id: number): Promise<ResultadosEntity | undefined> {
+  async obtenerResultadoPorId(
+    id: number,
+  ): Promise<ResultadosEntity | undefined> {
     return await this.resultadoRepository.findOne({
       where: {
         id: id,
-      }
+      },
     });
   }
-  
 
-  async actualizarResultadoPorId(id: number, nuevosValores: any): Promise<ResultadosEntity | undefined> {
+  async actualizarResultadoPorId(
+    id: number,
+    nuevosValores: any,
+  ): Promise<ResultadosEntity | undefined> {
     const resultadoExistente = await this.resultadoRepository.findOne({
       where: {
         id: id,
-      }
+      },
     });
-    
+
     if (resultadoExistente) {
       if (nuevosValores.nuevoResultado !== undefined) {
         resultadoExistente.resultados = nuevosValores.nuevoResultado;
-      } else{
-        throw new BadRequestException('Faltan datos necesarios para editar el registro');
+      } else {
+        throw new BadRequestException(
+          'Faltan datos necesarios para editar el registro',
+        );
       }
 
       return await this.resultadoRepository.save(resultadoExistente);
@@ -80,10 +87,9 @@ export class ResultadosService {
 
     return undefined;
   }
- 
 
   async eliminarResultadoPorId(id: number): Promise<any> {
-      const resultadoAEliminar = await this.resultadoRepository.findOne({
+    const resultadoAEliminar = await this.resultadoRepository.findOne({
       where: {
         id: id,
       },
@@ -96,9 +102,11 @@ export class ResultadosService {
     await this.resultadoRepository.remove(resultadoAEliminar);
     return 'Resultado eliminado exitosamente';
   }
-  
-  
-  async eliminarResultadoPorAnalisis(idOrden: number, idAnalisis: number): Promise<any> {
+
+  async eliminarResultadoPorAnalisis(
+    idOrden: number,
+    idAnalisis: number,
+  ): Promise<any> {
     const resultado = await this.resultadoRepository.findOne({
       where: {
         id_orden: idOrden,

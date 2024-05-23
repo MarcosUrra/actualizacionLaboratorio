@@ -1,9 +1,11 @@
-export interface Analisis {
+import { Subcategoria } from './subcategoria';
 
-    id?: number | undefined;
-    codigo: string;
-    nombre: string;
-    valores: string;
-    unidades: string;
-    resultados?: string;
+export interface Analisis {
+  id?: number | undefined;
+  codigo: string;
+  nombre: string;
+  valores: string;
+  unidades: string;
+  resultados?: string;
+  subcategorias: Subcategoria[] | undefined;
 }

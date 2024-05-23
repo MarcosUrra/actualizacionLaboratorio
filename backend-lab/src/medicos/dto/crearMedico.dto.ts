@@ -1,9 +1,9 @@
-import {IsString, IsOptional, IsBoolean } from 'class-validator';
+import { IsString, IsOptional, IsBoolean } from 'class-validator';
 
 export class crearMedicoDto {
   @IsBoolean()
   estado: boolean;
-  
+
   @IsString()
   apellido: string;
 
@@ -19,11 +19,9 @@ export class crearMedicoDto {
   @IsOptional()
   tipoDocumento?: string;
 
-  @IsOptional() 
+  @IsOptional()
   numeroDocumento?: string;
 
-  @IsOptional() 
+  @IsOptional()
   telefono?: string;
-
 }
-

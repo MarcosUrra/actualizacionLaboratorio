@@ -1,10 +1,9 @@
 import { IsString, IsOptional, IsBoolean } from 'class-validator';
 
 export class crearLaboratoristaDto {
-
   @IsBoolean()
   estado: boolean;
-  
+
   @IsString()
   apellido: string;
 
@@ -20,11 +19,9 @@ export class crearLaboratoristaDto {
   @IsOptional()
   tipoDocumento?: string;
 
-  @IsOptional() 
+  @IsOptional()
   numeroDocumento?: string;
 
-  @IsOptional() 
+  @IsOptional()
   telefono?: string;
-
 }
-

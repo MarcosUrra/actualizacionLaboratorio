@@ -1,4 +1,4 @@
 export class updateSolicitadoPorDto {
-    idArea:number
-    nombreArea:string
+  idArea: number;
+  nombreArea: string;
 }

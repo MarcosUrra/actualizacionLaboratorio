@@ -5,8 +5,8 @@ import { MedicosController } from './medicos.controller';
 import { MedicosEntity } from './entities/medicos.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([MedicosEntity])],
-    controllers: [MedicosController],
-    providers: [MedicosService]
+  imports: [TypeOrmModule.forFeature([MedicosEntity])],
+  controllers: [MedicosController],
+  providers: [MedicosService],
 })
-export class MedicosModule { }
+export class MedicosModule {}

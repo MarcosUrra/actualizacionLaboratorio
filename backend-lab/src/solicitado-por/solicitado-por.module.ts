@@ -7,6 +7,6 @@ import { SolicitadoPorEntity } from './entities/solicitado-por.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([SolicitadoPorEntity])],
   controllers: [SolicitadoPorController],
-  providers: [SolicitadoPorService]
+  providers: [SolicitadoPorService],
 })
 export class SolicitadoPorModule {}

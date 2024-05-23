@@ -1,3 +1,3 @@
 export class modificarLaboratoristaDto {
-    id: number
+  id: number;
 }

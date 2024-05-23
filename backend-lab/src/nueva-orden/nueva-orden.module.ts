@@ -10,10 +10,19 @@ import { GruposAnalisisEntity } from 'src/grupos de analisis/entities/grupos_ana
 import { LaboratoristasEntity } from 'src/laboratoristas/entities/laboratoristas.entity';
 import { ResultadosEntity } from 'src/resultados/resultados.entity';
 
-@Module ({
-  imports: [TypeOrmModule.forFeature([NuevaOrden,PacientesEntity,MedicosEntity,LaboratoristasEntity,AnalisisEntity,GruposAnalisisEntity,ResultadosEntity])],
+@Module({
+  imports: [
+    TypeOrmModule.forFeature([
+      NuevaOrden,
+      PacientesEntity,
+      MedicosEntity,
+      LaboratoristasEntity,
+      AnalisisEntity,
+      GruposAnalisisEntity,
+      ResultadosEntity,
+    ]),
+  ],
   controllers: [NuevaOrdenController],
   providers: [NuevaOrdenService],
 })
 export class NuevaOrdenModule {}
-

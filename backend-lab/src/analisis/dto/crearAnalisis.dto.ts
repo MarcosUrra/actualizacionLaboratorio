@@ -1,22 +1,53 @@
-import { IsNotEmpty, IsString } from "class-validator"
+import {
+  IsNotEmpty,
+  IsString,
+  IsArray,
+  ValidateNested,
+  IsOptional,
+} from 'class-validator';
+import { Type } from 'class-transformer';
 
-export class CrearAnalisisDto{
+export class SubcategoriaDto {
+  @IsOptional()
+  @IsString()
+  id?: number;
 
-    @IsString()
-    @IsNotEmpty({message: 'El codigo no puede estar vacío.'})
-    codigo: string;
+  @IsString()
+  @IsNotEmpty()
+  codigo: string;
 
-    @IsString()
-    @IsNotEmpty({message: 'El campo Nombre no puede estar vacío.'})
-    nombre: string;
+  @IsString()
+  @IsNotEmpty()
+  nombre: string;
 
-    @IsString()
-    @IsNotEmpty({message: 'El campo Valores no puede estar vacío.'})
-    valores: string;
+  @IsString()
+  @IsNotEmpty()
+  valores: string;
 
-    @IsString()
-    @IsNotEmpty({message: 'El campo Unidades no puede estar vacío.'})
-    unidades: string;
+  @IsString()
+  @IsNotEmpty()
+  unidades: string;
+}
 
+export class CrearAnalisisDto {
+  @IsString()
+  @IsNotEmpty()
+  codigo: string;
 
+  @IsString()
+  @IsNotEmpty()
+  nombre: string;
+
+  @IsString()
+  @IsNotEmpty()
+  valores: string;
+
+  @IsString()
+  @IsNotEmpty()
+  unidades: string;
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => SubcategoriaDto)
+  subcategorias: SubcategoriaDto[];
 }

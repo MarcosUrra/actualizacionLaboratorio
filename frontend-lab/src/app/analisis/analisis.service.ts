@@ -1,31 +1,37 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Analisis } from '../interfaces/analisis';
 import { environment } from 'src/environments/environment.development';
-
+import { Subcategoria } from '../interfaces/subcategoria';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AnalisisService {
   DialogoEliminarAnalisis(analisis: Observable<any>) {
     throw new Error('Method not implemented.');
   }
-   
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   crearAnalisis(nuevoAnalisis: any): Observable<any> {
-    return this.http.post(`${environment.baseUrl}/analisis/crearAnalisis`, nuevoAnalisis);
+    return this.http.post(
+      `${environment.baseUrl}/analisis/crearAnalisis`,
+      nuevoAnalisis
+    );
   }
 
   obtenerListadoAnalisis(): Observable<any> {
-    return this.http.get(`${environment.baseUrl}/analisis/obtenerListadoAnalisis`);
+    return this.http.get(
+      `${environment.baseUrl}/analisis/obtenerListadoAnalisis`
+    );
   }
 
   obtenerUnAnalisis(id: number): Observable<any> {
-    return this.http.get(`${environment.baseUrl}/analisis/obtenerUnAnalisis/${id}`);
+    return this.http.get(
+      `${environment.baseUrl}/analisis/obtenerUnAnalisis/${id}`
+    );
   }
 
   obtenerAnalisisPorNombre(nombre: string): Observable<any> {
@@ -33,6 +39,15 @@ export class AnalisisService {
   }
 
   modificarAnalisis(id: number, analisis: Analisis): Observable<any> {
-    return this.http.put(`${environment.baseUrl}/analisis/modificarAnalisis/${id}`, analisis);
+    return this.http.put(
+      `${environment.baseUrl}/analisis/modificarAnalisis/${id}`,
+      analisis
+    );
+  }
+
+  obtenerSubcategoriasPorAnalisisId(id: number): Observable<Subcategoria[]> {
+    return this.http.get<Subcategoria[]>(
+      `${environment.baseUrl}/analisis/obtenerSubcategoriasPorAnalisisId/${id}`
+    );
   }
 }
