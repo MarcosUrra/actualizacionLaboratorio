@@ -300,7 +300,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Analisis } from 'src/app/interfaces/analisis';
 import { AnalisisService } from 'src/app/analisis/analisis.service';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subcategoria } from 'src/app/interfaces/subcategoria';
@@ -350,8 +350,24 @@ export class AnalisisAgregarEditarComponent implements OnInit {
       ],
       valores: ['', Validators.required],
       unidades: ['', Validators.required],
-      subcategorias: [''],
+      subcategorias: this.fb.array([]),
     });
+  }
+
+  // Getter para acceder fácilmente al FormArray de subcategorías
+  get subcategoriasArray() {
+    return this.formAnalisis.get('subcategorias') as FormArray;
+  }
+
+  // Método para agregar una nueva subcategoría al FormArray
+  agregarSubcategoria() {
+    this.subcategoriasArray.push(
+      this.fb.group({
+        nombre: ['', Validators.required], // Puedes agregar más campos aquí según sea necesario
+        valores: ['', Validators.required],
+        unidades: ['', Validators.required],
+      })
+    );
   }
 
   mostrarAlerta(msg: string, accion: string) {
@@ -381,7 +397,7 @@ export class AnalisisAgregarEditarComponent implements OnInit {
       nombre: this.formAnalisis.value.nombre,
       valores: this.formAnalisis.value.valores,
       unidades: this.formAnalisis.value.unidades,
-      subcategorias: subcategoriasModelo || [],
+      subcategorias: this.formAnalisis.value.subcategorias,
     };
 
     if (this.dataAnalisis == null) {

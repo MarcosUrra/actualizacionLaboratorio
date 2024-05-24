@@ -52,6 +52,8 @@ import { ReportesComponent } from './dialogos/reportes/reportes.component';
 import { solicitadoPorComponent } from './solicitado-por/solicitado-por.component';
 import { solicitadoPorAgregarEditarComponent } from './dialogos/solicitado-por-agregar-editar/solicitado-por-agregar-editar.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatCardModule } from '@angular/material/card';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,7 +76,7 @@ import { MatChipsModule } from '@angular/material/chips';
     ManualUsuarioComponent,
     ReportesComponent,
     solicitadoPorAgregarEditarComponent,
-    //AnalisisComponent,
+    AnalisisComponent,
   ],
 
   imports: [
@@ -100,7 +102,7 @@ import { MatChipsModule } from '@angular/material/chips';
     MatDialogModule,
     MatGridListModule,
     MatMenuModule,
-    AnalisisComponent,
+    //AnalisisComponent,
     PacientesComponent,
     MedicosComponent,
     UsuariosComponent,
@@ -113,6 +115,7 @@ import { MatChipsModule } from '@angular/material/chips';
     MatCheckboxModule,
     solicitadoPorComponent,
     MatChipsModule,
+    MatCardModule,
   ],
 
   providers: [DatePipe],
