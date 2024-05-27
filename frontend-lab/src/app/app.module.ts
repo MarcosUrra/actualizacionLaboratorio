@@ -53,6 +53,7 @@ import { solicitadoPorComponent } from './solicitado-por/solicitado-por.componen
 import { solicitadoPorAgregarEditarComponent } from './dialogos/solicitado-por-agregar-editar/solicitado-por-agregar-editar.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -116,6 +117,7 @@ import { MatCardModule } from '@angular/material/card';
     solicitadoPorComponent,
     MatChipsModule,
     MatCardModule,
+    MatExpansionModule,
   ],
 
   providers: [DatePipe],

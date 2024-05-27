@@ -6,8 +6,8 @@ export class SubcategoriaEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
-  @Column({ type: 'varchar', length: 50, name: 'codigo', nullable: false })
-  codigo: string;
+  // @Column({ type: 'varchar', length: 50, name: 'codigo', nullable: false })
+  // codigo: string;
 
   @Column({ type: 'varchar', length: 200, name: 'nombre', nullable: false })
   nombre: string;

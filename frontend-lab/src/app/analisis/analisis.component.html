@@ -91,7 +91,6 @@
   </div>
 </div> -->
 
-html analisis
 <div class="listaAnalisis">
   <div class="encabezado-container">
     <h1>Listado de Análisis</h1>
@@ -138,32 +137,21 @@ html analisis
         <td mat-cell *matCellDef="let element">{{ element.codigo }}</td>
       </ng-container>
 
-      <ng-container matColumnDef="Subcategorías">
-        <th mat-header-cell *matHeaderCellDef>Subcategorías</th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-icon-button (click)="obtenerSubcategorias(element.id)">
-            <mat-icon>visibility</mat-icon>
-          </button>
-          <div *ngIf="element.subcategorias">
-            <ul>
-              <li *ngFor="let subcategoria of element.subcategorias">
-                {{ subcategoria.nombre }}
-              </li>
-            </ul>
-          </div>
-        </td>
+      <ng-container matColumnDef="Nombre">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
       </ng-container>
 
-      <!-- Subcategorías Column -->
-      <!-- <ng-container matColumnDef="Subcategorías">
+      <!-- <ng-container matColumnDef="Subcategorías"
+        >s
         <th mat-header-cell *matHeaderCellDef>Subcategorías</th>
         <td mat-cell *matCellDef="let element">
-          <button mat-button (click)="obtenerSubcategorias(element.id)">
-            Ver Subcategorías
-          </button>
           <div *ngIf="element.subcategorias">
             <ul>
-              <li *ngFor="let subcategoria of element.subcategorias">
+              <li
+                *ngFor="let subcategoria of element.subcategorias"
+                (click)="mostrarDetallesSubcategoria(subcategoria)"
+              >
                 {{ subcategoria.nombre }}
               </li>
             </ul>
@@ -171,10 +159,20 @@ html analisis
         </td>
       </ng-container> -->
 
-      <!-- Nombre Column -->
-      <ng-container matColumnDef="Nombre">
-        <th mat-header-cell *matHeaderCellDef>Nombre</th>
-        <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+      <ng-container matColumnDef="Subcategorías">
+        <th mat-header-cell *matHeaderCellDef>Subcategorías</th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="element.subcategorias">
+            <ul>
+              <li
+                *ngFor="let subcategoria of element.subcategorias"
+                (click)="mostrarDetallesSubcategoria(subcategoria)"
+              >
+                {{ subcategoria.nombre }}
+              </li>
+            </ul>
+          </div>
+        </td>
       </ng-container>
 
       <!-- Valores Normales Column -->
@@ -222,4 +220,12 @@ html analisis
     >
     </mat-paginator>
   </div>
+</div>
+
+<!-- Detalles de la subcategoría seleccionada -->
+<div *ngIf="subcategoriaSeleccionada" class="detalles-subcategoria">
+  <h3>Detalles de la Subcategoría</h3>
+  <p>Nombre: {{ subcategoriaSeleccionada.nombre }}</p>
+  <p>Valores: {{ subcategoriaSeleccionada.valores }}</p>
+  <p>Unidades: {{ subcategoriaSeleccionada.unidades }}</p>
 </div>

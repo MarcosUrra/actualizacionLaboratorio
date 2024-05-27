@@ -12,9 +12,9 @@ export class SubcategoriaDto {
   @IsString()
   id?: number;
 
-  @IsString()
-  @IsNotEmpty()
-  codigo: string;
+  // @IsString()
+  // @IsNotEmpty()
+  // codigo: string;
 
   @IsString()
   @IsNotEmpty()

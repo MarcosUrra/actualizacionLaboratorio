@@ -1,6 +1,6 @@
 export interface Subcategoria {
   id: number;
-  codigo: string;
+  //codigo: string;
   nombre: string;
   valores: string;
   unidades: string;

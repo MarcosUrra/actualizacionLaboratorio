@@ -7,6 +7,7 @@ import {
   Put,
   HttpException,
   HttpStatus,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { AnalisisService } from './analisis.service';
 import { CrearAnalisisDto } from './dto/crearAnalisis.dto';
@@ -63,7 +64,9 @@ export class AnalisisController {
   }
 
   @Get('obtenerSubcategoriasPorAnalisisId/:id')
-  async obtenerSubcategoriasPorAnalisisId(@Param('id') id: number) {
+  async obtenerSubcategoriasPorAnalisisId(
+    @Param('id', ParseIntPipe) id: number,
+  ) {
     try {
       const subcategorias =
         await this.analisisService.obtenerSubcategoriasPorAnalisisId(id);

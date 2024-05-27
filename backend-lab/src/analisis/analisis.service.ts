@@ -115,7 +115,7 @@ export class AnalisisService {
           });
           if (subcategoria) {
             // Actualizar campos de la subcategoría
-            subcategoria.codigo = subcategoriaDto.codigo;
+            //subcategoria.codigo = subcategoriaDto.codigo;
             subcategoria.nombre = subcategoriaDto.nombre;
             subcategoria.valores = subcategoriaDto.valores;
             subcategoria.unidades = subcategoriaDto.unidades;
