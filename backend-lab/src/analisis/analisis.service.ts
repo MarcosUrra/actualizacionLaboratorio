@@ -160,4 +160,20 @@ export class AnalisisService {
     }
     return analisis.subcategorias;
   }
+
+  async AnalisisYSubcategoriasPorOrden(idOrden: number): Promise<any> {
+    const analisis = await this.analisisRepository.find({
+      where: { id_orden: idOrden },
+      relations: ['subcategorias'],
+    });
+
+    if (analisis.length === 0) {
+      throw new HttpException('No results found', HttpStatus.NOT_FOUND);
+    }
+
+    return analisis.map((analisis) => ({
+      id: analisis.id,
+      subcategorias: analisis.subcategorias,
+    }));
+  }
 }

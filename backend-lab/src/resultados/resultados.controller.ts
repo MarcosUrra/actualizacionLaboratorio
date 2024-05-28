@@ -70,4 +70,18 @@ export class ResultadosController {
       idAnalisis,
     );
   }
+
+  // Nueva ruta para obtener análisis y subcategorías por orden
+  @Get('analisisYSubcategoriasPorOrden/:idOrden')
+  async obtenerAnalisisYSubcategoriasPorOrden(
+    @Param('idOrden', ParseIntPipe) idOrden: number,
+  ): Promise<any> {
+    try {
+      return await this.ResultadosService.obtenerAnalisisYSubcategoriasPorOrden(
+        idOrden,
+      );
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
 }

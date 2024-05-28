@@ -75,4 +75,15 @@ export class AnalisisController {
       throw new HttpException(error.message, HttpStatus.NOT_FOUND);
     }
   }
+
+  @Get('analisisYSubcategoriasPorOrden/:idOrden')
+  async obtenerAnalisisYSubcategoriasPorOrden(
+    @Param('idOrden', ParseIntPipe) idOrden: number,
+  ): Promise<any> {
+    try {
+      return await this.analisisService.AnalisisYSubcategoriasPorOrden(idOrden);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
 }

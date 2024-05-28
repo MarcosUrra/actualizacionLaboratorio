@@ -1,11 +1,40 @@
-import { NuevaOrden } from 'src/nueva-orden/nueva-orden.entity';
+// import { NuevaOrden } from 'src/nueva-orden/nueva-orden.entity';
+// import {
+//   Column,
+//   Entity,
+//   JoinColumn,
+//   ManyToOne,
+//   PrimaryGeneratedColumn,
+// } from 'typeorm';
+
+// @Entity('resultados')
+// export class ResultadosEntity {
+//   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
+//   id: number;
+
+//   @Column()
+//   id_orden: number;
+
+//   @Column()
+//   id_analisis: number;
+
+//   @Column()
+//   resultados: string;
+
+//   @ManyToOne(() => NuevaOrden, (orden) => orden.resultados)
+//   @JoinColumn({ name: 'id_orden' })
+//   orden: NuevaOrden;
+// }
+
 import {
-  Column,
   Entity,
-  JoinColumn,
-  ManyToOne,
   PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+import { NuevaOrden } from 'src/nueva-orden/nueva-orden.entity';
+import { AnalisisEntity } from 'src/analisis/entities/analisis.entity';
 
 @Entity('resultados')
 export class ResultadosEntity {
@@ -24,4 +53,8 @@ export class ResultadosEntity {
   @ManyToOne(() => NuevaOrden, (orden) => orden.resultados)
   @JoinColumn({ name: 'id_orden' })
   orden: NuevaOrden;
+
+  @ManyToOne(() => AnalisisEntity, (analisis) => analisis.resultados)
+  @JoinColumn({ name: 'id_analisis' })
+  analisis: AnalisisEntity;
 }

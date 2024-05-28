@@ -7,4 +7,5 @@ export interface Analisis {
   valores?: string;
   unidades?: string;
   subcategorias: Subcategoria[];
+  id_orden: number;
 }

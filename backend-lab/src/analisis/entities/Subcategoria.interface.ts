@@ -4,4 +4,5 @@ export interface Subcategoria {
   nombre: string;
   valores: string;
   unidades: string;
+  id_orden: number;
 }
