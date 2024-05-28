@@ -39,11 +39,11 @@ export class CrearAnalisisDto {
   nombre: string;
 
   @IsString()
-  @IsNotEmpty()
+  //@IsNotEmpty()
   valores: string;
 
   @IsString()
-  @IsNotEmpty()
+  //@IsNotEmpty()
   unidades: string;
 
   @IsArray()

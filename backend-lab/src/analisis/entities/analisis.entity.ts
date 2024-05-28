@@ -17,10 +17,10 @@ export class AnalisisEntity {
   @Column({ type: 'varchar', length: 200, name: 'nombre', nullable: false })
   nombre: string;
 
-  @Column({ type: 'varchar', length: 200, name: 'valores', nullable: false })
+  @Column({ type: 'varchar', length: 200, name: 'valores', nullable: true })
   valores: string;
 
-  @Column({ type: 'varchar', length: 200, name: 'unidades', nullable: false })
+  @Column({ type: 'varchar', length: 200, name: 'unidades', nullable: true })
   unidades: string;
 
   @ManyToMany(

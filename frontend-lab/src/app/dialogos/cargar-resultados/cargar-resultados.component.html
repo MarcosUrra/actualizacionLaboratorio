@@ -1,4 +1,4 @@
-
+<!-- 
 <div class="form-container">
     <h1 mat-dialog-title>{{tituloAccion}}</h1>
     <h1 mat-dialog-title>Número Análisis: {{data.idOrden}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Orden Diaria: {{data.numeroOrdenDiario }}</h1>
@@ -36,4 +36,52 @@
         <button mat-raised-button color="primary" (click)="guardarResultados()">GUARDAR RESULTADOS</button>
     </div>
 
+</div> -->
+<div class="form-container">
+    <h1 mat-dialog-title>{{ tituloAccion }}</h1>
+    <h1 mat-dialog-title>Número Análisis: {{ data.idOrden }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Orden Diaria: {{ data.numeroOrdenDiario }}</h1>
+    <div mat-dialog-content>
+        <form [formGroup]="formCargarResultados" (ngSubmit)="guardarResultados()">
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Resultado</th>
+                            <th>Unidades</th>
+                            <th>Valores Normales</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Filas para análisis con subcategorías -->
+                        <ng-container *ngFor="let analisis of listadoAnalisisValores">
+                            <!-- Fila para el análisis -->
+                            <tr>
+                                <td>{{ analisis.nombre }}</td>
+                                <td>
+                                    <input type="text" formControlName="analisis_{{ analisis.id }}" id="resultados" placeholder="Ingrese el resultado para {{ analisis.nombre }}">
+                                </td>
+                                <td>{{ analisis.unidades }}</td>
+                                <td>{{ analisis.valores }}</td>
+                            </tr>
+                            <!-- Filas para las subcategorías del análisis -->
+                            <tr *ngFor="let subcat of analisis.subcategorias">
+                                <td>{{ subcat.nombre }}</td>
+                                <td>
+                                    <input type="text" formControlName="subcategoria_{{ subcat.id }}" id="resultados" placeholder="Ingrese el resultado para {{ subcat.nombre }}">
+                                </td>
+                                <td>{{ subcat.unidades }}</td>
+                                <td>{{ subcat.valores }}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                    
+                </table>
+            </div>
+        </form>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button (click)="volver()" color="warn">VOLVER</button>
+        <button mat-raised-button color="primary" (click)="guardarResultados()">GUARDAR RESULTADOS</button>
+    </div>
 </div>
