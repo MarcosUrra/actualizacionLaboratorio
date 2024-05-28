@@ -30,7 +30,7 @@ export class AnalisisService {
 
   obtenerUnAnalisis(id: number): Observable<any> {
     return this.http.get(
-      `${environment.baseUrl}/analisis/obtenerUnAnalisis/${id}`
+      `${environment.baseUrl}/analisis/obtenerAnalisis/${id}`
     );
   }
 
