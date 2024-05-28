@@ -50,3 +50,6 @@ table {
     text-overflow: ellipsis; 
   }
 
+  .listaAnalisis ul li:hover {
+    cursor: pointer;
+  }

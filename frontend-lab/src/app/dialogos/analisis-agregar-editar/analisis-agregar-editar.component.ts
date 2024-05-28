@@ -506,8 +506,8 @@ export class AnalisisAgregarEditarComponent implements OnInit {
           Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s() ']+/),
         ],
       ],
-      valores: ['', Validators.required],
-      unidades: ['', Validators.required],
+      valores: [''],
+      unidades: [''],
       subcategorias: this.fb.array([]),
     });
   }
