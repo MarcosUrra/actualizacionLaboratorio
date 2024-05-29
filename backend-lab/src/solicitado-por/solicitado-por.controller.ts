@@ -18,14 +18,14 @@ export class SolicitadoPorController {
   solicitadoPorRepository: any;
   constructor(private solicitadoPorService: SolicitadoPorService) {}
 
-  @Post() // ruta para thunderC: http://localhost:3000/solicitado-por/listadoSolicitantes
+  @Post() // ruta para thunderC: http://LOCALHOST:3000/solicitado-por/listadoSolicitantes
   async createSolicitadoPOr(
     @Body(new ValidationPipe()) nuevoSolicitante: CreateSolicitadoPorDto,
   ): Promise<{ mensaje: string; solicitadoPor: SolicitadoPorEntity }> {
     return this.solicitadoPorService.create(nuevoSolicitante);
   }
 
-  @Get('listadoSolicitantes') //ruta para thunderC: http://localhost:3000/solicitado-por/listadoSolicitantes
+  @Get('listadoSolicitantes') //ruta para thunderC: http://LOCALHOST:3000/solicitado-por/listadoSolicitantes
   obtenerListadoSolicitantes(): Promise<SolicitadoPorEntity[]> {
     return this.solicitadoPorService.obtenerListadoSolicitantes();
   }

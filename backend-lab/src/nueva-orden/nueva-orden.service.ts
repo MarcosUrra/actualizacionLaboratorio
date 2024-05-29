@@ -367,4 +367,29 @@ export class NuevaOrdenService {
       throw new Error('Error al obtener órdenes.');
     }
   }
+  // public async obtenerResultadosPorOrden(id: number): Promise<NuevaOrden> {
+  //   try {
+  //     return await this.nuevaOrdenRepository
+  //       .createQueryBuilder('NuevaOrden')
+  //       .leftJoinAndSelect('NuevaOrden.analisis', 'AnalisisEntity')
+  //       .where('NuevaOrden.id = :id', { id: id })
+  //       .getOne();
+  //   } catch (error) {
+  //     console.error('Error al obtener la orden con relaciones:', error.message);
+  //     throw new Error('Error al obtener la orden con relaciones.');
+  //   }
+  // }
+  public async obtenerResultadosPorOrden(id: number): Promise<NuevaOrden> {
+    try {
+      return await this.nuevaOrdenRepository
+        .createQueryBuilder('NuevaOrden')
+        .leftJoinAndSelect('NuevaOrden.analisis', 'AnalisisEntity')
+        .where('NuevaOrden.id = :id', { id: id })
+        .getOne();
+    } catch (error) {
+      console.error('Error al obtener la orden con relaciones:', error.message);
+      throw new Error('Error al obtener la orden con relaciones.');
+    }
+  }
+
 }

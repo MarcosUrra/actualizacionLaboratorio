@@ -145,7 +145,7 @@ export class ResultadosService {
     for (const element of data.analisis) {
       const resultado = new ResultadosEntity();
       resultado.id_orden = id;
-      resultado.id_analisis = element.id;
+      //resultado.id_analisis = element.id;
       resultado.resultados = element.resultado;
 
       const errors = await validate(resultado);
@@ -168,7 +168,7 @@ export class ResultadosService {
   ): Promise<ResultadosEntity[]> {
     const resultados = await this.resultadoRepository.find({
       where: { id_orden: idOrden },
-      relations: ['analisis'],
+      // relations: ['analisis'],
     });
 
     if (resultados.length === 0) {
@@ -176,6 +176,7 @@ export class ResultadosService {
     }
     return resultados;
   }
+  
 
   async obtenerResultadoPorId(
     id: number,
@@ -228,7 +229,7 @@ export class ResultadosService {
     const resultado = await this.resultadoRepository.findOne({
       where: {
         id_orden: idOrden,
-        id_analisis: idAnalisis,
+        //id_analisis: idAnalisis,
       },
     });
 
@@ -241,20 +242,20 @@ export class ResultadosService {
   }
 
   // Nuevo método para obtener análisis y subcategorías por orden
-  async obtenerAnalisisYSubcategoriasPorOrden(idOrden: number): Promise<any> {
-    const resultados = await this.resultadoRepository.find({
-      where: { id_orden: idOrden },
-      relations: ['analisis', 'analisis.subcategorias'],
-    });
+  // async obtenerAnalisisYSubcategoriasPorOrden(idOrden: number): Promise<any> {
+  //   const resultados = await this.resultadoRepository.find({
+  //     where: { id_orden: idOrden },
+  //     relations: ['analisis', 'analisis.subcategorias'],
+  //   });
 
-    if (resultados.length === 0) {
-      throw new HttpException('No results found', HttpStatus.NOT_FOUND);
-    }
+  //   if (resultados.length === 0) {
+  //     throw new HttpException('No results found', HttpStatus.NOT_FOUND);
+  //   }
 
-    return resultados.map((resultado) => ({
-      id: resultado.id,
-      analisis: resultado.analisis,
-      subcategorias: resultado.analisis.subcategorias,
-    }));
-  }
+  //   return resultados.map((resultado) => ({
+  //     id: resultado.id,
+  //     analisis: resultado.analisis,
+  //     subcategorias: resultado.analisis.subcategorias,
+  //   }));
+  // }
 }

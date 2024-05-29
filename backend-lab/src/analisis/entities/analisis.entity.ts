@@ -69,6 +69,8 @@ export class AnalisisEntity {
   @Column()
   id_orden: number;
 
+  
+
   @ManyToMany(
     () => GruposAnalisisEntity,
     (gruposanalisis) => gruposanalisis.listado_de_analisis,
@@ -81,6 +83,6 @@ export class AnalisisEntity {
   @OneToMany(() => SubcategoriaEntity, (subcategoria) => subcategoria.analisis)
   subcategorias: SubcategoriaEntity[];
 
-  @OneToMany(() => ResultadosEntity, (resultado) => resultado.analisis)
-  resultados: ResultadosEntity[];
+  // @OneToMany(() => ResultadosEntity, (resultado) => resultado.analisis)
+  // resultados: ResultadosEntity[];
 }

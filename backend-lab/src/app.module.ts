@@ -28,7 +28,7 @@ import { SubcategoriaEntity } from './analisis/entities/SubcategoriaEntity';
 
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: 'LOCALHOST',
       port: 3306,
       username: 'root',
       password: '',

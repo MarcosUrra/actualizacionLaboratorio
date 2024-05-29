@@ -185,6 +185,6 @@
   <button mat-raised-button color="primary" (click)="agregarEditarNuevaOrden()"
     [disabled]="formNuevaOrden.invalid">{{botonAccion}}
   </button>
-  <button mat-raised-button *ngIf="dataNuevaOrden" (click)="CargarResultados()"
+  <button mat-raised-button *ngIf="dataNuevaOrden" (click)="CargarResultados(dataNuevaOrden.id)"
     style="background-color: green; color: white;">RESULTADOS</button>
 </div>

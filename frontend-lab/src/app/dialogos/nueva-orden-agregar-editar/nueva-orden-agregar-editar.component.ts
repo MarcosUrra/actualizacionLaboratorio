@@ -139,7 +139,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
     this.obtenerListadoMedicos();
 
     if (this.dataNuevaOrden !== null) {
-      console.log(this.dataNuevaOrden);
+      // console.log(this.dataNuevaOrden);
       this.formNuevaOrden.patchValue({
         numeroDocumento: this.dataNuevaOrden.paciente?.numeroDocumento,
         apellido: this.dataNuevaOrden.paciente.apellido,
@@ -185,7 +185,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
 
   obtenerListadoMedicos() {
     this.http
-      .get<Medicos[]>('http://10.10.0.79:3000/medicos/listadoMedicos')
+      .get<Medicos[]>('http://LOCALHOST:3000/medicos/listadoMedicos')
       .pipe(
         map((medicos) => medicos.filter((medico) => medico.estado === true)),
         tap((medicos) => {
@@ -216,7 +216,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
   obtenerDatosPaciente(numeroDocumento: string) {
     this.http
       .get<Pacientes>(
-        `http://10.10.0.79:3000/pacientes/obtenerPacientePorDni/${numeroDocumento}`
+        `http://LOCALHOST:3000/pacientes/obtenerPacientePorDni/${numeroDocumento}`
       )
       .subscribe((paciente) => {
         if (paciente && this.dataNuevaOrden == null) {
@@ -246,7 +246,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
   obtenerListadoLaboratoristas() {
     this.http
       .get<Laboratoristas[]>(
-        'http://10.10.0.79:3000/laboratoristas/listadoLaboratoristas'
+        'http://localhost:3000/laboratoristas/listadoLaboratoristas'
       )
       .pipe(
         map((laboratoristas) =>
@@ -341,7 +341,9 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
     }
   }
 
-  CargarResultados(): void {
+  CargarResultados(id: number): void {
+    // console.log(id);
+    // debugger
     const unidades: { [key: string]: any } = {};
     this.dataNuevaOrden.analisis.forEach((analisis) => {
       unidades[`analisis_${(analisis as unknown as Analisis).id}`] = (
@@ -359,7 +361,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
       width: '63%',
       data: {
         listadoAnalisisValores: this.listadoAnalisisValores,
-        idOrden: this.dataNuevaOrden.id,
+        idOrden: id,//this.dataNuevaOrden.id,
         unidades: unidades,
         numeroOrdenDiario: this.dataNuevaOrden.numeroOrdenDiario,
       },

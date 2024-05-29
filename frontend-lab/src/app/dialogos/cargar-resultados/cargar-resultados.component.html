@@ -52,8 +52,8 @@
             <tr>
               <th>Nombre</th>
               <th>Resultado</th>
-              <th>Unidades</th>
               <th>Valores Normales</th>
+              <th>Unidades</th>
             </tr>
           </thead>
           <tbody>
@@ -72,8 +72,8 @@
                     }}"
                   />
                 </td>
-                <td>{{ analisis.unidades }}</td>
                 <td>{{ analisis.valores }}</td>
+                <td>{{ analisis.unidades }}</td>
               </tr>
               <!-- Filas para las subcategorías del análisis -->
               <tr *ngFor="let subcat of analisis.subcategorias">
@@ -86,8 +86,8 @@
                     placeholder="Ingrese el resultado para {{ subcat.nombre }}"
                   />
                 </td>
-                <td>{{ subcat.unidades }}</td>
                 <td>{{ subcat.valores }}</td>
+                <td>{{ subcat.unidades }}</td>
               </tr>
             </ng-container>
           </tbody>

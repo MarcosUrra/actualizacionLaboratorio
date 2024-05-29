@@ -73,7 +73,7 @@ export class NuevaOrdenService {
 
   obtenerResultadosPorOrden(idOrden: number): Observable<any> {
     return this.http.get(
-      `${environment.baseUrl}/resultados/obtenerResultados/${idOrden}`
+      `${environment.baseUrl}/nueva-orden/obtenerResultados/${idOrden}`
     );
   }
 

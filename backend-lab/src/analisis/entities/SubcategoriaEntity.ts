@@ -18,8 +18,8 @@ export class SubcategoriaEntity {
   @Column({ type: 'varchar', length: 200, name: 'unidades', nullable: false })
   unidades: string;
 
-  @Column()
-  id_orden: number;
+  // @Column()
+  // id_orden: number;
 
   // Relación con analisis
   @ManyToOne(() => AnalisisEntity, (analisis) => analisis.subcategorias)

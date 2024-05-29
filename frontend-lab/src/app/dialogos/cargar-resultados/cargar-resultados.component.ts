@@ -45,7 +45,7 @@ export class CargarResultadosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Listado de análisis:', this.listadoAnalisisValores);
+    // console.log('Listado de análisis:', this.listadoAnalisisValores);
     this.obtenerResultados();
     this.data.listadoAnalisisValores.forEach((analisis: Analisis) => {
       this.formCargarResultados.addControl(
@@ -62,45 +62,58 @@ export class CargarResultadosComponent implements OnInit {
       }
     });
     // console.log('Listado de subcategorías:', this.data.listadoAnalisisValores.map(a => a.subcategorias).flat());
-    console.log('Listado de subcategorías:', this.data.listadoAnalisisValores); //este es el array que debo usar en el segundo ngfor, debo preguntar si el id del primer array es uigual al id del segundo array, si se cumple esa condicion, es donde haria subcategoria.nombre, subcategoria.valores
-    this.listadoAnalisisValores = this.data.listadoAnalisisValores.flat();
+    // console.log('Listado de subcategorías:', this.data.listadoAnalisisValores); //este es el array que debo usar en el segundo ngfor, debo preguntar si el id del primer array es uigual al id del segundo array, si se cumple esa condicion, es donde haria subcategoria.nombre, subcategoria.valores
+    // this.listadoAnalisisValores = this.data.listadoAnalisisValores.flat();
   } //
 
   obtenerResultados(): void {
+    let array: any[] = [];
     this.nuevaOrdenService
       .obtenerResultadosPorOrden(this.data.idOrden)
-      .subscribe((resultados: Resultados[]) => {
-        this.data.listadoAnalisisValores.forEach((element) => {});
-        this.resultadosPrevios = resultados || [];
-        this.llenarFormularioConResultadosPrevios();
+      .subscribe((resultados: any) => {
+        // this.data.listadoAnalisisValores.forEach((element) => {});
+        // this.resultadosPrevios = resultados || [];
+        // this.llenarFormularioConResultadosPrevios();
+        // console.log(this.data.listadoAnalisisValores,resultados)
+        this.data.listadoAnalisisValores.forEach((element:any) => {
+          resultados.analisis.forEach((resultado: any) => {
+            // console.log(element,resultado)
+            // debugger;
+            if (element.id === resultado.id) {
+              array.push(element);
+            }
+          })
+        })
       });
+      console.log(array)
+      this.listadoAnalisisValores = array;
   }
 
   llenarFormularioConResultadosPrevios(): void {
-    this.resultadosPrevios.forEach((resultado: any) => {
-      const controlName = 'analisis_' + resultado.id_analisis;
-      const resultadoControl = this.formCargarResultados.get(controlName);
-      const resultadoIdControl = this.formCargarResultados.get('resultadoId');
-      if (resultadoControl && resultadoIdControl) {
-        resultadoControl.setValue(resultado.resultados);
-        resultadoIdControl.setValue(resultado.id);
-      }
+  //   this.resultadosPrevios.forEach((resultado: any) => {
+  //     const controlName = 'analisis_' + resultado.id_analisis;
+  //     const resultadoControl = this.formCargarResultados.get(controlName);
+  //     const resultadoIdControl = this.formCargarResultados.get('resultadoId');
+  //     if (resultadoControl && resultadoIdControl) {
+  //       resultadoControl.setValue(resultado.resultados);
+  //       resultadoIdControl.setValue(resultado.id);
+  //     }
 
-      if (resultado.subcategorias) {
-        resultado.subcategorias.forEach((subcat: Subcategoria) => {
-          const subcatControlName = 'subcategoria_' + subcat.id;
-          const subcatControl =
-            this.formCargarResultados.get(subcatControlName);
-          if (subcatControl) {
-            subcatControl.setValue(subcat.valores);
-          }
-        });
-      }
-    });
+  //     if (resultado.subcategorias) {
+  //       resultado.subcategorias.forEach((subcat: Subcategoria) => {
+  //         const subcatControlName = 'subcategoria_' + subcat.id;
+  //         const subcatControl =
+  //           this.formCargarResultados.get(subcatControlName);
+  //         if (subcatControl) {
+  //           subcatControl.setValue(subcat.valores);
+  //         }
+  //       });
+  //     }
+  //   });
   }
 
   verAnalisis(data: any, unidades: any): void {
-    console.log('Datos para ver análisis:', data);
+    // console.log('Datos para ver análisis:', data);
     const analisisArray: any[] = [];
 
     data.analisis.forEach((element: any) => {
@@ -153,7 +166,7 @@ export class CargarResultadosComponent implements OnInit {
   }
 
   guardarResultados(): void {
-    this.obtenerResultados();
+    // this.obtenerResultados();// quedamos aca
     const resultados = {
       resultados: this.formCargarResultados.get('resultados')?.value || '',
       analisis: [] as { id: number; resultado: any }[],

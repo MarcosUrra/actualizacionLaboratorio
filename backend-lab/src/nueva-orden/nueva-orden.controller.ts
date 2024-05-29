@@ -7,6 +7,8 @@ import {
   Patch,
   Post,
   Query,
+  HttpException,
+  HttpStatus
 } from '@nestjs/common';
 import { NuevaOrdenService } from './nueva-orden.service';
 import { NuevaOrden } from './nueva-orden.entity';
@@ -179,5 +181,14 @@ export class NuevaOrdenController {
   @Get('/impresa/:id')
   actualizarEstadoOrden(@Param('id') id: number): Promise<any> {
     return this.nuevaOrdenService.actualizarEstadoOrden(id);
+  }
+  
+  @Get('/obtenerResultados/:idOrden')
+  async obtenerResultados(@Param('idOrden') idOrden: number): Promise<any> {
+    try {
+      return await this.nuevaOrdenService.obtenerResultadosPorOrden(idOrden);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
   }
 }
