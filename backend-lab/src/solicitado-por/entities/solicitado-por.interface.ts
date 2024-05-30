@@ -1,5 +1,10 @@
 export interface solicitadoPor {
   id: number;
-  nombreArea: string;
   estado: boolean;
+  nombreSolicitadoPor: string;
+  direccion?: string;
+  provincia?: string;
+  ciudad?: string;
+  email?: string;
+  telefono?: string;
 }

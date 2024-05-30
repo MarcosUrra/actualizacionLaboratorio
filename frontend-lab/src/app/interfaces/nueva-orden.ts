@@ -10,16 +10,19 @@ export interface NuevaOrden {
     nombre: string;
   };
   medicos?: {
-    id: number,
+    id: number;
     nombre: string;
   };
   laboratorista?: {
-    id: number,
+    id: number;
     nombre: string;
   };
-  solicitadoPor: string;
-  analisis: string[]; 
-  grupos_analisis: string[]; 
+  solicitadoPor?: {
+    id: number;
+    nombreSolicitadoPor: string;
+  };
+  analisis: string[];
+  grupos_analisis: string[];
   fecha: Date;
   valores: string;
   unidades: string;

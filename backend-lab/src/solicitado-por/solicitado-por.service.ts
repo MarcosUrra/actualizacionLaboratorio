@@ -13,11 +13,11 @@ export class SolicitadoPorService {
   ) {}
 
   async create(
-    createSolicitadoPorDto: CreateSolicitadoPorDto,
+    nuevoSolicitadoPor: CreateSolicitadoPorDto,
   ): Promise<{ mensaje: string; solicitadoPor: SolicitadoPorEntity }> {
     const solicitadoPorFound = await this.solicitadoPorRepository.findOne({
       where: {
-        nombreArea: createSolicitadoPorDto.nombreSolicitadoPor,
+        nombreSolicitadoPor: nuevoSolicitadoPor.nombreSolicitadoPor,
       },
     });
 
@@ -28,9 +28,8 @@ export class SolicitadoPorService {
       );
     }
 
-    const newSolicitadoPorEntity = this.solicitadoPorRepository.create(
-      createSolicitadoPorDto,
-    );
+    const newSolicitadoPorEntity =
+      this.solicitadoPorRepository.create(nuevoSolicitadoPor);
     await this.solicitadoPorRepository.save(newSolicitadoPorEntity);
 
     return {

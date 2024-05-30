@@ -18,5 +18,8 @@ export class CreateSolicitadoPorDto {
   ciudad?: string;
 
   @IsString()
+  email?: string;
+
+  @IsString()
   telefono?: string;
 }

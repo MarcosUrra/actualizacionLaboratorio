@@ -35,6 +35,8 @@ import { MedicosAgregarEditarComponent } from '../medicos-agregar-editar/medicos
 import { AnalisisAgregarEditarComponent } from '../analisis-agregar-editar/analisis-agregar-editar.component';
 import { GruposAnalisisAgregarEditarComponent } from '../grupos-analisis-agregar-editar/grupos-analisis-agregar-editar.component';
 import { MatSelect } from '@angular/material/select';
+import { solicitadoPor } from 'src/app/interfaces/solicitado-por';
+import { solicitadoPorAgregarEditarComponent } from '../solicitado-por-agregar-editar/solicitado-por-agregar-editar.component';
 
 @Component({
   selector: 'app-nueva-orden-agregar-editar',
@@ -45,6 +47,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
   formNuevaOrden: FormGroup;
   tituloAccion: string = 'NUEVA ORDEN';
   botonAccion: string = 'GUARDAR';
+  solicitadopor: any[] = [];
   medicos: any[] = [];
   laboratoristas: any[] = [];
   listadoAnalisisControl: FormControl;
@@ -76,7 +79,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
       nombre: ['', [Validators.required]],
       numeroHistoriaClinica: [''],
       obraSocial: ['', [Validators.required]],
-      solicitadoPor: [''],
+      solicitadoPor: ['', [Validators.required]],
       medico: ['', [Validators.required]],
       laboratorista: ['', [Validators.required]],
       fecha: [''],
@@ -135,6 +138,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
           a.nombreDelGrupo.localeCompare(b.nombreDelGrupo)
       );
     });
+    this.obtenerListadoSolicitadoPor();
     this.obtenerListadoLaboratoristas();
     this.obtenerListadoMedicos();
 
@@ -183,9 +187,34 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
     this.listadoGruposControl.setValue(listadoGruposIds);
   }
 
+  obtenerListadoSolicitadoPor() {
+    this.http
+      .get<solicitadoPor[]>(
+        'http://localhost:3000/solicitado-por/listadoSolicitantes'
+      )
+      .pipe(
+        map((solicitadoPor) =>
+          solicitadoPor.filter((solicitadoPor) => solicitadoPor.estado === true)
+        ),
+        tap((solicitadoPor) => {
+          this.solicitadopor = solicitadoPor.sort((a, b) =>
+            a.nombreSolicitadoPor.localeCompare(b.nombreSolicitadoPor)
+          );
+          const solicitadoPorPreseleccionado = this.solicitadopor.find(
+            (solicitadoPor) =>
+              solicitadoPor.id === this.dataNuevaOrden.solicitadoPor?.id
+          );
+          this.formNuevaOrden.patchValue({
+            solicitadoPor: solicitadoPorPreseleccionado,
+          });
+        })
+      )
+      .subscribe();
+  }
+
   obtenerListadoMedicos() {
     this.http
-      .get<Medicos[]>('http://LOCALHOST:3000/medicos/listadoMedicos')
+      .get<Medicos[]>('http://localhost:3000/medicos/listadoMedicos')
       .pipe(
         map((medicos) => medicos.filter((medico) => medico.estado === true)),
         tap((medicos) => {
@@ -216,7 +245,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
   obtenerDatosPaciente(numeroDocumento: string) {
     this.http
       .get<Pacientes>(
-        `http://LOCALHOST:3000/pacientes/obtenerPacientePorDni/${numeroDocumento}`
+        `http://localhost:3000/pacientes/obtenerPacientePorDni/${numeroDocumento}`
       )
       .subscribe((paciente) => {
         if (paciente && this.dataNuevaOrden == null) {
@@ -282,6 +311,14 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
       nombre: this.formNuevaOrden.value.nombre,
     };
 
+    const solicitadoPorModelo = this.formNuevaOrden.value.solicitadoPor
+      ? {
+          id: this.formNuevaOrden.value.solicitadoPor.id,
+          nombreSolicitadoPor:
+            this.formNuevaOrden.value.solicitadoPor.nombreSolicitadoPor,
+        }
+      : undefined;
+
     const medicoModelo = this.formNuevaOrden.value.medico
       ? {
           id: this.formNuevaOrden.value.medico.id,
@@ -304,7 +341,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
       paciente: pacienteModelo,
       medicos: medicoModelo,
       laboratorista: laboratoristaModelo,
-      solicitadoPor: this.formNuevaOrden.value.solicitadoPor,
+      solicitadoPor: solicitadoPorModelo,
       analisis: this.formNuevaOrden.value.analisis,
       grupos_analisis: this.formNuevaOrden.value.grupos_analisis,
       fecha: this.formNuevaOrden.value.fecha,
@@ -361,7 +398,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
       width: '63%',
       data: {
         listadoAnalisisValores: this.listadoAnalisisValores,
-        idOrden: id,//this.dataNuevaOrden.id,
+        idOrden: id, //this.dataNuevaOrden.id,
         unidades: unidades,
         numeroOrdenDiario: this.dataNuevaOrden.numeroOrdenDiario,
       },
@@ -403,6 +440,21 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
           a.apellido.localeCompare(b.apellido)
         );
         this.obtenerListadoLaboratoristas();
+      }
+    });
+  }
+
+  agregarEditarSolicitadoPor() {
+    const dialogRef = this.dialog.open(solicitadoPorAgregarEditarComponent, {
+      width: '35%',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result && result.solicitadoPor) {
+        const newSolicitadoPor = result.solicitadoPor;
+        this.solicitadopor = this.solicitadopor.sort((a, b) =>
+          a.nombreSolicitadoPor.localeCompare(b.nombreSolicitadoPor)
+        );
+        this.obtenerListadoSolicitadoPor();
       }
     });
   }

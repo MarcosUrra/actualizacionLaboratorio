@@ -1,65 +1,122 @@
-<h1 mat-dialog-title>{{tituloAccion}} AREA SOLICITANTE</h1>
+<h1 mat-dialog-title>{{ tituloAccion }} AREA SOLICITANTE</h1>
 <div mat-dialog-content>
   <form [formGroup]="formSolicitante">
     <mat-grid-list cols="1" rowHeight="90px">
       <mat-grid-tile>
-        <mat-checkbox class="estado" (change)="actualizarEstado($event.checked)" formControlName="estado" color="primary">Estado Activo</mat-checkbox>
+        <mat-checkbox
+          class="estado"
+          (change)="actualizarEstado($event.checked)"
+          formControlName="estado"
+          color="primary"
+          >Estado Activo</mat-checkbox
+        >
         <mat-error *ngIf="formSolicitante.get('estado')?.hasError('required')">
-        Al crear una nueva Area Solicitante debe activar el estado.
+          Al crear una nueva Area Solicitante debe activar el estado.
         </mat-error>
       </mat-grid-tile>
       <mat-grid-tile>
         <mat-form-field appearance="outline">
           <mat-label>Nombre area</mat-label>
-          <input matInput formControlName="nombreArea" autocomplete="off"(input)="formSolicitante.get('nombreArea')?.markAsTouched()">
-          <mat-error *ngIf="formSolicitante.get('nombreArea')?.hasError('pattern')">
+          <input
+            matInput
+            formControlName="nombreSolicitadoPor"
+            autocomplete="off"
+            (input)="
+              formSolicitante.get('nombreSolicitadoPor')?.markAsTouched()
+            "
+          />
+          <mat-error
+            *ngIf="
+              formSolicitante.get('nombreSolicitadoPor')?.hasError('pattern')
+            "
+          >
             El nombre del area debe contener sólo caracteres alfabéticos.
           </mat-error>
-          <mat-error *ngIf="formSolicitante.get('nombreArea')?.hasError('required')">
+          <mat-error
+            *ngIf="
+              formSolicitante.get('nombreSolicitadoPor')?.hasError('required')
+            "
+          >
             El nombre del area es obligatorio.
-          </mat-error>  
+          </mat-error>
         </mat-form-field>
       </mat-grid-tile>
 
       <mat-grid-tile>
         <mat-form-field appearance="outline">
           <mat-label>Dirección</mat-label>
-          <input matInput formControlName="direccion" autocomplete="off"(input)="formSolicitante.get('direccion')?.markAsTouched()">
+          <input
+            matInput
+            formControlName="direccion"
+            autocomplete="off"
+            (input)="formSolicitante.get('direccion')?.markAsTouched()"
+          />
         </mat-form-field>
       </mat-grid-tile>
 
       <mat-grid-tile>
         <mat-form-field appearance="outline">
           <mat-label>Provincia</mat-label>
-          <input matInput formControlName="provincia" autocomplete="off"(input)="formSolicitante.get('provincia')?.markAsTouched()">
+          <input
+            matInput
+            formControlName="provincia"
+            autocomplete="off"
+            (input)="formSolicitante.get('provincia')?.markAsTouched()"
+          />
         </mat-form-field>
       </mat-grid-tile>
 
       <mat-grid-tile>
         <mat-form-field appearance="outline">
           <mat-label>Ciudad</mat-label>
-          <input matInput formControlName="ciudad" autocomplete="off"(input)="formSolicitante.get('ciudad')?.markAsTouched()">
+          <input
+            matInput
+            formControlName="ciudad"
+            autocomplete="off"
+            (input)="formSolicitante.get('ciudad')?.markAsTouched()"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            autocomplete="off"
+            (input)="formSolicitante.get('email')?.markAsTouched()"
+          />
         </mat-form-field>
       </mat-grid-tile>
 
       <mat-grid-tile>
         <mat-form-field appearance="outline">
           <mat-label>Teléfono</mat-label>
-          <input matInput formControlName="telefono" autocomplete="off"(input)="formSolicitante.get('telefono')?.markAsTouched()">
-          <mat-error *ngIf="formSolicitante.get('telefono')?.hasError('pattern')">
+          <input
+            matInput
+            formControlName="telefono"
+            autocomplete="off"
+            (input)="formSolicitante.get('telefono')?.markAsTouched()"
+          />
+          <mat-error
+            *ngIf="formSolicitante.get('telefono')?.hasError('pattern')"
+          >
             Ingrese valores numéricos.
           </mat-error>
         </mat-form-field>
       </mat-grid-tile>
-
     </mat-grid-list>
   </form>
 </div>
 <div mat-dialog-actions>
   <button mat-raised-button mat-dialog-close color="warn">VOLVER</button>
-  <button mat-raised-button color="primary"
-  (click)="agregarEditarSolicitadoPor()"
-  [disabled]="formSolicitante.invalid"
-  >{{botonAccion}}
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="agregarEditarSolicitadoPor()"
+    [disabled]="formSolicitante.invalid"
+  >
+    {{ botonAccion }}
   </button>
 </div>

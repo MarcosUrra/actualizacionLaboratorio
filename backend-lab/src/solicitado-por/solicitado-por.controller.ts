@@ -18,7 +18,7 @@ export class SolicitadoPorController {
   solicitadoPorRepository: any;
   constructor(private solicitadoPorService: SolicitadoPorService) {}
 
-  @Post() // ruta para thunderC: http://LOCALHOST:3000/solicitado-por/listadoSolicitantes
+  @Post()
   async createSolicitadoPOr(
     @Body(new ValidationPipe()) nuevoSolicitante: CreateSolicitadoPorDto,
   ): Promise<{ mensaje: string; solicitadoPor: SolicitadoPorEntity }> {

@@ -1,67 +1,113 @@
-<h1 mat-dialog-title>{{ tituloAccion }} {{ dataNuevaOrden ? 'ANÁLISIS NRO: ' + dataNuevaOrden.id : '' }}</h1>
+<h1 mat-dialog-title>
+  {{ tituloAccion }}
+  {{ dataNuevaOrden ? "ANÁLISIS NRO: " + dataNuevaOrden.id : "" }}
+</h1>
 <div mat-dialog-content>
   <form [formGroup]="formNuevaOrden">
-    <mat-grid-list cols="3" rowHeight="90px"> 
-      
+    <mat-grid-list cols="3" rowHeight="90px">
       <mat-grid-tile>
         <mat-form-field appearance="outline">
           <mat-label>Número de Documento</mat-label>
-          <input matInput formControlName="numeroDocumento" autocomplete="off"
-            (input)="formNuevaOrden.get('numeroDocumento')?.markAsTouched()">
+          <input
+            matInput
+            formControlName="numeroDocumento"
+            autocomplete="off"
+            (input)="formNuevaOrden.get('numeroDocumento')?.markAsTouched()"
+          />
           <mat-hint align="start">Enter o "+" para paciente nuevo</mat-hint>
-          <mat-error *ngIf="formNuevaOrden.get('numeroDocumento')?.hasError('required')">
+          <mat-error
+            *ngIf="formNuevaOrden.get('numeroDocumento')?.hasError('required')"
+          >
             Campo obligatorio.
           </mat-error>
-          <mat-error *ngIf="formNuevaOrden.get('numeroDocumento')?.hasError('pattern')">
+          <mat-error
+            *ngIf="formNuevaOrden.get('numeroDocumento')?.hasError('pattern')"
+          >
             Formato inválido.
           </mat-error>
         </mat-form-field>
-  
-        <button mat-raised-button class="add-button" (click)="agregarEditarPaciente()" color="primary">
+
+        <button
+          mat-raised-button
+          class="add-button"
+          (click)="agregarEditarPaciente()"
+          color="primary"
+        >
           <mat-icon class="add-icon">add</mat-icon>
         </button>
-
       </mat-grid-tile>
     </mat-grid-list>
     <mat-grid-list cols="4" rowHeight="90px">
-      <mat-grid-tile>  
+      <mat-grid-tile>
         <mat-form-field appearance="outline">
           <mat-label>Apellido</mat-label>
-          <input matInput formControlName="apellido" autocomplete="off"
-            (input)="formNuevaOrden.get('apellido')?.markAsTouched()" readonly>
-            <mat-error *ngIf="formNuevaOrden.get('numeroOrdenDiario')?.hasError('required')">
-              Campo obligatorio.
-            </mat-error>
+          <input
+            matInput
+            formControlName="apellido"
+            autocomplete="off"
+            (input)="formNuevaOrden.get('apellido')?.markAsTouched()"
+            readonly
+          />
+          <mat-error
+            *ngIf="
+              formNuevaOrden.get('numeroOrdenDiario')?.hasError('required')
+            "
+          >
+            Campo obligatorio.
+          </mat-error>
         </mat-form-field>
       </mat-grid-tile>
 
       <mat-grid-tile>
-       <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline">
           <mat-label>Nombre</mat-label>
-          <input matInput formControlName="nombre" autocomplete="off"
-            (input)="formNuevaOrden.get('nombre')?.markAsTouched()" readonly>
-            <mat-error *ngIf="formNuevaOrden.get('numeroOrdenDiario')?.hasError('required')">
-              Campo obligatorio.
-            </mat-error>
+          <input
+            matInput
+            formControlName="nombre"
+            autocomplete="off"
+            (input)="formNuevaOrden.get('nombre')?.markAsTouched()"
+            readonly
+          />
+          <mat-error
+            *ngIf="
+              formNuevaOrden.get('numeroOrdenDiario')?.hasError('required')
+            "
+          >
+            Campo obligatorio.
+          </mat-error>
         </mat-form-field>
       </mat-grid-tile>
 
       <mat-grid-tile>
         <mat-form-field appearance="outline">
           <mat-label>Historia Clínica</mat-label>
-          <input matInput formControlName="numeroHistoriaClinica" autocomplete="off"
-            (input)="formNuevaOrden.get('numeroHistoriaClinica')?.markAsTouched()" (keydown.enter)="$event.preventDefault()">
+          <input
+            matInput
+            formControlName="numeroHistoriaClinica"
+            autocomplete="off"
+            (input)="
+              formNuevaOrden.get('numeroHistoriaClinica')?.markAsTouched()
+            "
+            (keydown.enter)="$event.preventDefault()"
+          />
         </mat-form-field>
       </mat-grid-tile>
 
       <mat-grid-tile>
         <mat-form-field appearance="outline">
           <mat-label>Obra Social</mat-label>
-          <input matInput formControlName="obraSocial" autocomplete="off"
-            (input)="formNuevaOrden.get('obraSocial')?.markAsTouched()" (keydown.enter)="$event.preventDefault()">
-            <mat-error *ngIf="formNuevaOrden.get('obraSocial')?.hasError('required')">
-              Campo obligatorio.
-            </mat-error>
+          <input
+            matInput
+            formControlName="obraSocial"
+            autocomplete="off"
+            (input)="formNuevaOrden.get('obraSocial')?.markAsTouched()"
+            (keydown.enter)="$event.preventDefault()"
+          />
+          <mat-error
+            *ngIf="formNuevaOrden.get('obraSocial')?.hasError('required')"
+          >
+            Campo obligatorio.
+          </mat-error>
         </mat-form-field>
       </mat-grid-tile>
     </mat-grid-list>
@@ -70,23 +116,39 @@
       <mat-grid-tile>
         <mat-form-field appearance="outline">
           <mat-label>Solicitado Por</mat-label>
-          <mat-select formControlName="solicitadoPor" (input)="formNuevaOrden.get('solicitadoPor')?.markAsTouched()">
-            <mat-option value="externo">Consultorio Externo</mat-option>
-            <mat-option value="internado">Internado</mat-option>
-            <mat-option value="guardia">Guardia</mat-option>
+          <mat-select formControlName="solicitadoPor">
+            <mat-option
+              *ngFor="let solicitado of solicitadopor"
+              [value]="solicitado"
+              >{{ solicitado.nombreSolicitadoPor }}</mat-option
+            >
           </mat-select>
         </mat-form-field>
+        <button
+          mat-raised-button
+          class="add-button"
+          (click)="agregarEditarSolicitadoPor()"
+          color="primary"
+        >
+          <mat-icon class="add-icon">add</mat-icon>
+        </button>
       </mat-grid-tile>
 
       <mat-grid-tile>
         <mat-form-field appearance="outline">
           <mat-label>Médico</mat-label>
           <mat-select formControlName="medico">
-            <mat-option *ngFor="let medico of medicos" [value]="medico">{{medico.apellido}}
-              {{medico.nombre}}</mat-option>
+            <mat-option *ngFor="let medico of medicos" [value]="medico"
+              >{{ medico.apellido }} {{ medico.nombre }}</mat-option
+            >
           </mat-select>
         </mat-form-field>
-        <button mat-raised-button class="add-button" (click)="agregarEditarMedico()" color="primary">
+        <button
+          mat-raised-button
+          class="add-button"
+          (click)="agregarEditarMedico()"
+          color="primary"
+        >
           <mat-icon class="add-icon">add</mat-icon>
         </button>
       </mat-grid-tile>
@@ -94,14 +156,25 @@
       <mat-grid-tile>
         <mat-form-field appearance="outline">
           <mat-label>Orden Diario</mat-label>
-          <input matInput formControlName="numeroOrdenDiario" autocomplete="off"
-            (input)="formNuevaOrden.get('numeroOrdenDiario')?.markAsTouched()" (keydown.enter)="$event.preventDefault()">
-            <mat-error *ngIf="formNuevaOrden.get('numeroOrdenDiario')?.hasError('required')">
-              Campo obligatorio.
-            </mat-error>
-            <mat-error *ngIf="formNuevaOrden.get('numeroOrdenDiario')?.hasError('pattern')">
-              Formato inválido.
-            </mat-error>
+          <input
+            matInput
+            formControlName="numeroOrdenDiario"
+            autocomplete="off"
+            (input)="formNuevaOrden.get('numeroOrdenDiario')?.markAsTouched()"
+            (keydown.enter)="$event.preventDefault()"
+          />
+          <mat-error
+            *ngIf="
+              formNuevaOrden.get('numeroOrdenDiario')?.hasError('required')
+            "
+          >
+            Campo obligatorio.
+          </mat-error>
+          <mat-error
+            *ngIf="formNuevaOrden.get('numeroOrdenDiario')?.hasError('pattern')"
+          >
+            Formato inválido.
+          </mat-error>
         </mat-form-field>
       </mat-grid-tile>
 
@@ -109,82 +182,148 @@
         <mat-form-field appearance="outline">
           <mat-label>Laboratorista</mat-label>
           <mat-select formControlName="laboratorista">
-            <mat-option *ngFor="let laboratorista of laboratoristas" [value]="laboratorista">{{laboratorista.apellido}}
-              {{laboratorista.nombre}}</mat-option>
+            <mat-option
+              *ngFor="let laboratorista of laboratoristas"
+              [value]="laboratorista"
+              >{{ laboratorista.apellido }}
+              {{ laboratorista.nombre }}</mat-option
+            >
           </mat-select>
         </mat-form-field>
-        <button mat-raised-button class="add-button" (click)="agregarEditarLaboratorista()" color="primary">
+        <button
+          mat-raised-button
+          class="add-button"
+          (click)="agregarEditarLaboratorista()"
+          color="primary"
+        >
           <mat-icon class="add-icon">add</mat-icon>
         </button>
       </mat-grid-tile>
     </mat-grid-list>
- 
+
     <div>
       <mat-grid-list cols="2" rowHeight="120px">
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Listado de Análisis</mat-label>
-            <mat-select [formControl]="listadoAnalisisControl" multiple [compareWith]="compararAnalisis">
-              <mat-option *ngFor="let analisis of listadoAnalisisValores" [value]="analisis">
+            <mat-select
+              [formControl]="listadoAnalisisControl"
+              multiple
+              [compareWith]="compararAnalisis"
+            >
+              <mat-option
+                *ngFor="let analisis of listadoAnalisisValores"
+                [value]="analisis"
+              >
                 {{ analisis.nombre }}
               </mat-option>
             </mat-select>
-            <input matInput placeholder="Buscar análisis" (input)="filtrarAnalisis()">
+            <input
+              matInput
+              placeholder="Buscar análisis"
+              (input)="filtrarAnalisis()"
+            />
           </mat-form-field>
-            <button mat-raised-button class="add-button" (click)="agregarEditarAnalisis()" color="primary">
-              <mat-icon class="add-icon">add</mat-icon>
-            </button>
-        </mat-grid-tile>      
+          <button
+            mat-raised-button
+            class="add-button"
+            (click)="agregarEditarAnalisis()"
+            color="primary"
+          >
+            <mat-icon class="add-icon">add</mat-icon>
+          </button>
+        </mat-grid-tile>
 
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Listado de Grupos</mat-label>
-            <mat-select [formControl]="listadoGruposControl" multiple [compareWith]="compararGrupos">
-              <mat-option *ngFor="let grupos of listadoGruposValores" [value]="grupos">
+            <mat-select
+              [formControl]="listadoGruposControl"
+              multiple
+              [compareWith]="compararGrupos"
+            >
+              <mat-option
+                *ngFor="let grupos of listadoGruposValores"
+                [value]="grupos"
+              >
                 {{ grupos.nombreDelGrupo }}
               </mat-option>
             </mat-select>
-            <input matInput placeholder="Buscar grupos de análisis" (input)="filtrarGrupos()">
+            <input
+              matInput
+              placeholder="Buscar grupos de análisis"
+              (input)="filtrarGrupos()"
+            />
           </mat-form-field>
-            <button mat-raised-button class="add-button" (click)="agregarEditarGrupo()" color="primary">
-              <mat-icon class="add-icon">add</mat-icon>
-            </button>
+          <button
+            mat-raised-button
+            class="add-button"
+            (click)="agregarEditarGrupo()"
+            color="primary"
+          >
+            <mat-icon class="add-icon">add</mat-icon>
+          </button>
         </mat-grid-tile>
       </mat-grid-list>
     </div>
 
-    <div style="width: 100%;">
-      <mat-form-field appearance="outline" style="width: 100%;" >
+    <div style="width: 100%">
+      <mat-form-field appearance="outline" style="width: 100%">
         <mat-label>Observaciones</mat-label>
-        <textarea matInput formControlName="observaciones" autocomplete="off" rows="3" 
-            (input)="formNuevaOrden.get('observaciones')?.markAsTouched()" maxlength="250">
-        </textarea> 
+        <textarea
+          matInput
+          formControlName="observaciones"
+          autocomplete="off"
+          rows="3"
+          (input)="formNuevaOrden.get('observaciones')?.markAsTouched()"
+          maxlength="250"
+        >
+        </textarea>
         <mat-hint align="start">Máximo 250 caracteres</mat-hint>
-        <mat-error *ngIf="formNuevaOrden.get('observaciones')?.hasError('maxlength')">
+        <mat-error
+          *ngIf="formNuevaOrden.get('observaciones')?.hasError('maxlength')"
+        >
         </mat-error>
       </mat-form-field>
     </div>
 
-    <div style="width: 100%;">
-      <mat-form-field appearance="outline" style="width: 100%;" >
+    <div style="width: 100%">
+      <mat-form-field appearance="outline" style="width: 100%">
         <mat-label>Observaciones Internas</mat-label>
-        <textarea matInput formControlName="observacionesInternas" autocomplete="off" rows="3" 
-                  (input)="formNuevaOrden.get('observacionesInternas')?.markAsTouched()" maxlength="250">
-        </textarea> 
+        <textarea
+          matInput
+          formControlName="observacionesInternas"
+          autocomplete="off"
+          rows="3"
+          (input)="formNuevaOrden.get('observacionesInternas')?.markAsTouched()"
+          maxlength="250"
+        >
+        </textarea>
         <mat-hint align="start">Máximo 250 caracteres</mat-hint>
-        <mat-error *ngIf="formNuevaOrden.get('observaciones')?.hasError('maxlength')">
+        <mat-error
+          *ngIf="formNuevaOrden.get('observaciones')?.hasError('maxlength')"
+        >
         </mat-error>
-
       </mat-form-field>
     </div>
-    
   </form>
 </div>
 <div mat-dialog-actions>
   <button mat-raised-button (click)="volver()" color="warn">VOLVER</button>
-  <button mat-raised-button color="primary" (click)="agregarEditarNuevaOrden()"
-    [disabled]="formNuevaOrden.invalid">{{botonAccion}}
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="agregarEditarNuevaOrden()"
+    [disabled]="formNuevaOrden.invalid"
+  >
+    {{ botonAccion }}
   </button>
-  <button mat-raised-button *ngIf="dataNuevaOrden" (click)="CargarResultados(dataNuevaOrden.id)"
-    style="background-color: green; color: white;">RESULTADOS</button>
+  <button
+    mat-raised-button
+    *ngIf="dataNuevaOrden"
+    (click)="CargarResultados(dataNuevaOrden.id)"
+    style="background-color: green; color: white"
+  >
+    RESULTADOS
+  </button>
 </div>

@@ -17,11 +17,26 @@ import { ImpresionService } from '../shared/services/impresion.service';
   templateUrl: './solicitado-por.component.html',
   styleUrls: ['./solicitado-por.component.css'],
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatIconModule, solicitadoPorComponent],
+  imports: [
+    MatTableModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    solicitadoPorComponent,
+  ],
 })
-
 export class solicitadoPorComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['Estado','nombreArea', 'Dirección', 'Provincia', 'Ciudad', 'Teléfono', 'Acciones'];
+  displayedColumns: string[] = [
+    'Estado',
+    'nombreSolicitadoPor',
+    'direccion',
+    'Provincia',
+    'ciudad',
+    'email',
+    'Teléfono',
+    'Acciones',
+  ];
   dataSource = new MatTableDataSource<solicitadoPor>();
 
   constructor(
@@ -30,10 +45,7 @@ export class solicitadoPorComponent implements AfterViewInit, OnInit {
     private _snackBar: MatSnackBar,
     private cdr: ChangeDetectorRef,
     private srvImpresion: ImpresionService
-
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.mostrarSolicitadoPor();
@@ -45,106 +57,152 @@ export class solicitadoPorComponent implements AfterViewInit, OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
 
     if (!filterValue.trim()) {
-        this.dataSource.filter = '';
-        return;
+      this.dataSource.filter = '';
+      return;
     }
 
     if (filterValue.startsWith('act')) {
-        this.dataSource.filter = 'true';
-        return;
+      this.dataSource.filter = 'true';
+      return;
     }
 
     if (filterValue.startsWith('ina')) {
-        this.dataSource.filter = 'false';
-        return;
+      this.dataSource.filter = 'false';
+      return;
     }
 
     this.dataSource.filter = filterValue.trim().toLowerCase();
-}
+  }
 
-  
-
-  
+  // mostrarSolicitadoPor() {
+  //   this.solicitadoPorService.obtenerListadoSolicitadoPor().subscribe({
+  //     next: (dataResponse) => {
+  //       dataResponse.sort(
+  //         (
+  //           a: { nombresolicitadoPor: string },
+  //           b: { nombresolicitadoPor: any }
+  //         ) => a.nombresolicitadoPor.localeCompare(b.nombresolicitadoPor)
+  //       );
+  //       this.dataSource.data = dataResponse;
+  //     },
+  //     error: (e) => {
+  //       alert('Error al cargar las areas solicitantes');
+  //     },
+  //   });
+  // }
 
   mostrarSolicitadoPor() {
     this.solicitadoPorService.obtenerListadoSolicitadoPor().subscribe({
       next: (dataResponse) => {
-        dataResponse.sort((a: { nombresolicitadoPor: string; }, b: { nombresolicitadoPor: any; }) => a.nombresolicitadoPor.localeCompare(b.nombresolicitadoPor));
+        dataResponse.sort(
+          (
+            a: { nombresolicitadoPor: string | null | undefined },
+            b: { nombresolicitadoPor: string | null | undefined }
+          ) => {
+            if (!a.nombresolicitadoPor) return 1;
+            if (!b.nombresolicitadoPor) return -1;
+
+            return a.nombresolicitadoPor.localeCompare(b.nombresolicitadoPor);
+          }
+        );
         this.dataSource.data = dataResponse;
-      }, error: (e) => {
-        alert("Error al cargar las areas solicitantes");
-      }
-    })
+      },
+      error: (e) => {
+        alert('Error al cargar las áreas solicitantes');
+      },
+    });
   }
 
   abrirDialogo() {
-    this.dialog.open(solicitadoPorAgregarEditarComponent, {
-      disableClose: true,
-      width: "35%",
-    }).afterClosed().subscribe(resultado => {
-      if (resultado === "creado") {
-        this.mostrarSolicitadoPor();
-      }
-    })
+    this.dialog
+      .open(solicitadoPorAgregarEditarComponent, {
+        disableClose: true,
+        width: '35%',
+      })
+      .afterClosed()
+      .subscribe((resultado) => {
+        if (resultado === 'creado') {
+          this.mostrarSolicitadoPor();
+        }
+      });
   }
 
   abrirDialogoEditar(dataSolicitadoPor: solicitadoPor) {
-    this.dialog.open(solicitadoPorAgregarEditarComponent, {
-      disableClose: true,
-      width: "35%",
-      data: dataSolicitadoPor
-    }).afterClosed().subscribe(resultado => {
-      if (resultado === "editado") {
-        this.mostrarSolicitadoPor();
-      }
-    })
+    this.dialog
+      .open(solicitadoPorAgregarEditarComponent, {
+        disableClose: true,
+        width: '35%',
+        data: dataSolicitadoPor,
+      })
+      .afterClosed()
+      .subscribe((resultado) => {
+        if (resultado === 'editado') {
+          this.mostrarSolicitadoPor();
+        }
+      });
   }
 
   mostrarAlerta(msg: string, accion: string) {
     this._snackBar.open(msg, accion, {
-      horizontalPosition: "center",
-      verticalPosition: "bottom",
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
       duration: 4000,
     });
   }
 
   getEstadoString(estado: boolean): string {
-  return estado ? 'Activo' : 'Inactivo';
+    return estado ? 'Activo' : 'Inactivo';
   }
 
   onImprimir() {
-    const displayedColumns: Array<keyof solicitadoPor> = ['estado', 'nombreSolicitadoPor', 'direccion', 'provincia', 'ciudad', 'telefono'];
+    const displayedColumns: Array<keyof solicitadoPor> = [
+      'estado',
+      'nombreSolicitadoPor',
+      'direccion',
+      'provincia',
+      'ciudad',
+      'email',
+      'telefono',
+    ];
     const columnHeaders: { [key: string]: string } = {
-        'estado': 'Estado',
-        'nombreSolicitadoPor': 'NombreSolicitadoPor',
-        'direccion': 'Direccion',
-        'provincia': 'Provincia',
-        'ciudad': 'Ciudad',
-        'telefono': 'Teléfono'
+      estado: 'Estado',
+      nombreSolicitadoPor: 'NombreSolicitadoPor',
+      direccion: 'direccion',
+      provincia: 'Provincia',
+      ciudad: 'Ciudad',
+      email: 'Email',
+      telefono: 'Teléfono',
     };
-  
-    let data = this.dataSource.filteredData;
-  
-    const formattedData = data.map((item: solicitadoPor) => {
-        const formattedItem: { [key: string]: any } = {};
-        for (const column of displayedColumns) {
-            if (column === 'estado') {
-                formattedItem[columnHeaders[column]] = this.getEstadoString(item[column]);
-            } else {
-                formattedItem[columnHeaders[column]] = item[column];
-            }
-        }
-        return formattedItem;
-    });
-  
-    const displayedColumnHeaders = displayedColumns.map(column => columnHeaders[column]);
-  
-    this.srvImpresion.imprimir(formattedData, 'Listado de areas solicitantes', displayedColumnHeaders, true);
-}
 
+    let data = this.dataSource.filteredData;
+
+    const formattedData = data.map((item: solicitadoPor) => {
+      const formattedItem: { [key: string]: any } = {};
+      for (const column of displayedColumns) {
+        if (column === 'estado') {
+          formattedItem[columnHeaders[column]] = this.getEstadoString(
+            item[column]
+          );
+        } else {
+          formattedItem[columnHeaders[column]] = item[column];
+        }
+      }
+      return formattedItem;
+    });
+
+    const displayedColumnHeaders = displayedColumns.map(
+      (column) => columnHeaders[column]
+    );
+
+    this.srvImpresion.imprimir(
+      formattedData,
+      'Listado de areas solicitantes',
+      displayedColumnHeaders,
+      true
+    );
+  }
 }
