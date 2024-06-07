@@ -69,8 +69,6 @@ export class AnalisisEntity {
   @Column()
   id_orden: number;
 
-  
-
   @ManyToMany(
     () => GruposAnalisisEntity,
     (gruposanalisis) => gruposanalisis.listado_de_analisis,

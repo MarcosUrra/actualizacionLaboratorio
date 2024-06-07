@@ -391,5 +391,4 @@ export class NuevaOrdenService {
       throw new Error('Error al obtener la orden con relaciones.');
     }
   }
-
 }

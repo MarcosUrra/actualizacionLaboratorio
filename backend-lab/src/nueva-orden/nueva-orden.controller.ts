@@ -8,7 +8,7 @@ import {
   Post,
   Query,
   HttpException,
-  HttpStatus
+  HttpStatus,
 } from '@nestjs/common';
 import { NuevaOrdenService } from './nueva-orden.service';
 import { NuevaOrden } from './nueva-orden.entity';
@@ -182,7 +182,7 @@ export class NuevaOrdenController {
   actualizarEstadoOrden(@Param('id') id: number): Promise<any> {
     return this.nuevaOrdenService.actualizarEstadoOrden(id);
   }
-  
+
   @Get('/obtenerResultados/:idOrden')
   async obtenerResultados(@Param('idOrden') idOrden: number): Promise<any> {
     try {

@@ -1,0 +1,115 @@
+<h1 mat-dialog-title>{{ tituloAccion }} OBRA SOCIAL</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formObraSocial">
+    <mat-grid-list cols="1" rowHeight="90px">
+      <mat-grid-tile>
+        < class="estado" (change)="actualizarEstado($event.checked)"
+        formControlName="estado" color="primary" >Estado ActivformObraSocial >
+        <mat-error *ngIf="formObraSocial.get('estado')?.hasError('required')">
+          Al crear una nueva Obra Social debe activar el estado.
+        </mat-error>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre obra social</mat-label>
+          <input
+            matInput
+            formControlName="nombreObraSocial"
+            autocomplete="off"
+            (input)="formObraSocial.get('nombreObraSocial')?.markAsTouched()"
+          />
+          <mat-error
+            *ngIf="formObraSocial.get('nombreObraSocial')?.hasError('pattern')"
+          >
+            El nombre de la obra social debe contener sólo caracteres
+            alfabéticos.
+          </mat-error>
+          <mat-error
+            *ngIf="
+              formObraSocial.get('nombreSolicitadoPor')?.hasError('required')
+            "
+          >
+            El nombre de la obra social es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>CUIT</mat-label>
+          <input
+            matInput
+            formControlName="CUIT"
+            autocomplete="off"
+            (input)="formObraSocial.get('CUIT')?.markAsTouched()"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Dirección</mat-label>
+          <input
+            matInput
+            formControlName="direccion"
+            autocomplete="off"
+            (input)="formObraSocial.get('direccion')?.markAsTouched()"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Teléfono</mat-label>
+          <input
+            matInput
+            formControlName="telefono"
+            autocomplete="off"
+            (input)="formObraSocial.get('telefono')?.markAsTouched()"
+          />
+          <mat-error
+            *ngIf="formObraSocial.get('telefono')?.hasError('pattern')"
+          >
+            Ingrese valores numéricos.
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+</div>
+
+<mat-grid-tile>
+  <mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+    <input
+      matInput
+      formControlName="email"
+      autocomplete="off"
+      (input)="formObraSocial.get('email')?.markAsTouched()"
+    />
+  </mat-form-field>
+</mat-grid-tile>
+
+<mat-grid-tile>
+  <mat-form-field appearance="outline">
+    <mat-label>Web</mat-label>
+    <input
+      matInput
+      formControlName="web"
+      autocomplete="off"
+      (input)="formObraSocial.get('web')?.markAsTouched()"
+    />
+  </mat-form-field>
+</mat-grid-tile>
+
+<div mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close color="warn">VOLVER</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="agregarEditarObrasSociales()"
+    [disabled]="formObraSocial.invalid"
+  >
+    {{ botonAccion }}
+  </button>
+</div>

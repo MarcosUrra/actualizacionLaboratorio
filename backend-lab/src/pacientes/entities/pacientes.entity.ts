@@ -1,4 +1,5 @@
 import { NuevaOrden } from 'src/nueva-orden/nueva-orden.entity';
+import { obrasSocialesEntity } from 'src/obras-sociales/entities/obras-sociales.entity';
 import { OneToMany } from 'typeorm';
 import { Column } from 'typeorm/decorator/columns/Column';
 import { PrimaryGeneratedColumn } from 'typeorm/decorator/columns/PrimaryGeneratedColumn';
@@ -56,6 +57,9 @@ export class PacientesEntity {
   @OneToMany(() => NuevaOrden, (nuevaOrden) => nuevaOrden.paciente)
   ordenes: NuevaOrden[];
 
+  @OneToMany(() => obrasSocialesEntity, (obraSocial) => obraSocial.paciente)
+  obrasSociales: obrasSocialesEntity[];
+
   @Column({
     type: 'datetime',
     name: 'Fecha Alta Paciente',
@@ -72,4 +76,5 @@ export class PacientesEntity {
   sexo_paciente: any;
   telefono_paciente: any;
   email_paciente: any;
+  obraSocial: any;
 }

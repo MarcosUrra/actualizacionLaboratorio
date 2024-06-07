@@ -96,31 +96,34 @@
       <mat-grid-tile>
         <mat-form-field appearance="outline">
           <mat-label>Obra Social</mat-label>
-          <input
-            matInput
-            formControlName="obraSocial"
-            autocomplete="off"
-            (input)="formNuevaOrden.get('obraSocial')?.markAsTouched()"
-            (keydown.enter)="$event.preventDefault()"
-          />
-          <mat-error
-            *ngIf="formNuevaOrden.get('obraSocial')?.hasError('required')"
-          >
-            Campo obligatorio.
-          </mat-error>
+          <mat-select formControlName="obraSocial">
+            <mat-option
+              *ngFor="let obraSocial of obraSocial"
+              [value]="obraSocial"
+              >{{ obraSocial.nombreObraSocial }}
+              {{ obraSocial.nombreObraSocial }}</mat-option
+            >
+          </mat-select>
         </mat-form-field>
+        <button
+          mat-raised-button
+          class="add-button"
+          (click)="agregarEditarObraSocial()"
+          color="primary"
+        >
+          <mat-icon class="add-icon">add</mat-icon>
+        </button>
       </mat-grid-tile>
-    </mat-grid-list>
 
-    <mat-grid-list cols="4" rowHeight="90px">
       <mat-grid-tile>
         <mat-form-field appearance="outline">
           <mat-label>Solicitado Por</mat-label>
           <mat-select formControlName="solicitadoPor">
             <mat-option
-              *ngFor="let solicitado of solicitadopor"
-              [value]="solicitado"
-              >{{ solicitado.nombreSolicitadoPor }}</mat-option
+              *ngFor="let solicitadoPor of solicitadoPor"
+              [value]="solicitadoPor"
+              >{{ solicitadoPor.nombreSolicitadoPor }}
+              {{ solicitadoPor.nombreSolicitadoPor }}</mat-option
             >
           </mat-select>
         </mat-form-field>
@@ -146,7 +149,7 @@
         <button
           mat-raised-button
           class="add-button"
-          (click)="agregarEditarMedico()"
+          (click)="agregarEditarObraSocial()"
           color="primary"
         >
           <mat-icon class="add-icon">add</mat-icon>

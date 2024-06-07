@@ -2,6 +2,7 @@ import { AnalisisEntity } from 'src/analisis/entities/analisis.entity';
 import { GruposAnalisisEntity } from 'src/grupos de analisis/entities/grupos_analisis.entity';
 import { LaboratoristasEntity } from 'src/laboratoristas/entities/laboratoristas.entity';
 import { MedicosEntity } from 'src/medicos/entities/medicos.entity';
+import { obrasSocialesEntity } from 'src/obras-sociales/entities/obras-sociales.entity';
 import { PacientesEntity } from 'src/pacientes/entities/pacientes.entity';
 import { ResultadosEntity } from 'src/resultados/resultados.entity';
 import {
@@ -33,6 +34,12 @@ export class NuevaOrden {
 
   @Column()
   obraSocial: string;
+
+  // @ManyToOne(() => obrasSocialesEntity, (obraSocial) => obraSocial.ordenes, {
+  //   cascade: true,
+  // })
+  // @JoinColumn({ name: 'obraSocial_id' })
+  // obraSocial: obrasSocialesEntity;
 
   @ManyToOne(() => PacientesEntity, (paciente) => paciente.ordenes, {
     cascade: true,

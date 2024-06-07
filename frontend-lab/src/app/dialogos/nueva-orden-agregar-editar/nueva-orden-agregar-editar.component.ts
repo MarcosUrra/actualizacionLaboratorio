@@ -34,9 +34,11 @@ import { LaboratoristasAgregarEditarComponent } from '../laboratoristas-agregar-
 import { MedicosAgregarEditarComponent } from '../medicos-agregar-editar/medicos-agregar-editar.component';
 import { AnalisisAgregarEditarComponent } from '../analisis-agregar-editar/analisis-agregar-editar.component';
 import { GruposAnalisisAgregarEditarComponent } from '../grupos-analisis-agregar-editar/grupos-analisis-agregar-editar.component';
-import { MatSelect } from '@angular/material/select';
-import { solicitadoPor } from 'src/app/interfaces/solicitado-por';
 import { solicitadoPorAgregarEditarComponent } from '../solicitado-por-agregar-editar/solicitado-por-agregar-editar.component';
+import { solicitadoPor } from 'src/app/interfaces/solicitado-por';
+import { obrasSocialesAgregarEditarComponent } from '../obras-sociales-agregar-editar/obras-sociales-agregar-editar.component';
+import { obrasSociales } from 'src/app/interfaces/obras-sociales';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'app-nueva-orden-agregar-editar',
@@ -47,7 +49,8 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
   formNuevaOrden: FormGroup;
   tituloAccion: string = 'NUEVA ORDEN';
   botonAccion: string = 'GUARDAR';
-  solicitadopor: any[] = [];
+  obraSocial: any[] = [];
+  solicitadoPor: any[] = [];
   medicos: any[] = [];
   laboratoristas: any[] = [];
   listadoAnalisisControl: FormControl;
@@ -79,7 +82,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
       nombre: ['', [Validators.required]],
       numeroHistoriaClinica: [''],
       obraSocial: ['', [Validators.required]],
-      solicitadoPor: ['', [Validators.required]],
+      solicitadoPor: [''],
       medico: ['', [Validators.required]],
       laboratorista: ['', [Validators.required]],
       fecha: [''],
@@ -138,6 +141,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
           a.nombreDelGrupo.localeCompare(b.nombreDelGrupo)
       );
     });
+    this.obtenerListadoObrasSociales();
     this.obtenerListadoSolicitadoPor();
     this.obtenerListadoLaboratoristas();
     this.obtenerListadoMedicos();
@@ -187,20 +191,44 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
     this.listadoGruposControl.setValue(listadoGruposIds);
   }
 
+  obtenerListadoObrasSociales() {
+    this.http
+      .get<obrasSociales[]>(
+        'http://LOCALHOST:3000/obras-sociales/listadoObrasSociales'
+      )
+      .pipe(
+        map((ObrasSociales) =>
+          ObrasSociales.filter((obraSocial) => obraSocial.estado === true)
+        ),
+        tap((ObrasSociales) => {
+          this.obraSocial = this.obraSocial.sort((a, b) =>
+            a.nombreObraSocial.localeCompare(b.nombreObraSocial)
+          );
+          const obraSocialPreseleccionada = this.obraSocial.find(
+            (obraSocial) => obraSocial.id === this.dataNuevaOrden.obraSocial?.id
+          );
+          this.formNuevaOrden.patchValue({
+            obraSocial: obraSocialPreseleccionada,
+          });
+        })
+      )
+      .subscribe();
+  }
+
   obtenerListadoSolicitadoPor() {
     this.http
       .get<solicitadoPor[]>(
-        'http://localhost:3000/solicitado-por/listadoSolicitantes'
+        'http://LOCALHOST:3000/solicitado-por/listadoSolicitadoPor'
       )
       .pipe(
         map((solicitadoPor) =>
           solicitadoPor.filter((solicitadoPor) => solicitadoPor.estado === true)
         ),
-        tap((solicitadoPor) => {
-          this.solicitadopor = solicitadoPor.sort((a, b) =>
+        tap((SolicitadoPor) => {
+          this.solicitadoPor = this.solicitadoPor.sort((a, b) =>
             a.nombreSolicitadoPor.localeCompare(b.nombreSolicitadoPor)
           );
-          const solicitadoPorPreseleccionado = this.solicitadopor.find(
+          const solicitadoPorPreseleccionado = this.solicitadoPor.find(
             (solicitadoPor) =>
               solicitadoPor.id === this.dataNuevaOrden.solicitadoPor?.id
           );
@@ -214,7 +242,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
 
   obtenerListadoMedicos() {
     this.http
-      .get<Medicos[]>('http://localhost:3000/medicos/listadoMedicos')
+      .get<Medicos[]>('http://LOCALHOST:3000/medicos/listadoMedicos')
       .pipe(
         map((medicos) => medicos.filter((medico) => medico.estado === true)),
         tap((medicos) => {
@@ -245,7 +273,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
   obtenerDatosPaciente(numeroDocumento: string) {
     this.http
       .get<Pacientes>(
-        `http://localhost:3000/pacientes/obtenerPacientePorDni/${numeroDocumento}`
+        `http://LOCALHOST:3000/pacientes/obtenerPacientePorDni/${numeroDocumento}`
       )
       .subscribe((paciente) => {
         if (paciente && this.dataNuevaOrden == null) {
@@ -311,6 +339,14 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
       nombre: this.formNuevaOrden.value.nombre,
     };
 
+    const obraSocialModelo = this.formNuevaOrden.value.obraSocial
+      ? {
+          id: this.formNuevaOrden.value.obraSocial.id,
+          nombreObraSocial:
+            this.formNuevaOrden.value.obraSocial.nombreObraSocial,
+        }
+      : undefined;
+
     const solicitadoPorModelo = this.formNuevaOrden.value.solicitadoPor
       ? {
           id: this.formNuevaOrden.value.solicitadoPor.id,
@@ -337,7 +373,7 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
       id: this.dataNuevaOrden == null ? 0 : this.dataNuevaOrden.id,
       numeroOrdenDiario: this.formNuevaOrden.value.numeroOrdenDiario,
       numeroHistoriaClinica: this.formNuevaOrden.value.numeroHistoriaClinica,
-      obraSocial: this.formNuevaOrden.value.obraSocial,
+      obraSocial: obraSocialModelo,
       paciente: pacienteModelo,
       medicos: medicoModelo,
       laboratorista: laboratoristaModelo,
@@ -428,6 +464,36 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
     });
   }
 
+  agregarEditarObraSocial() {
+    const dialogRef = this.dialog.open(obrasSocialesAgregarEditarComponent, {
+      width: '35%',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result && result.obraSocial) {
+        const newObraSocial = result.obraSocial;
+        this.obraSocial = this.obraSocial.sort((a, b) =>
+          a.nombreObraSocial.localeCompare(b.nombreObraSocial)
+        );
+        this.obtenerListadoObrasSociales();
+      }
+    });
+  }
+
+  agregarEditarSolicitadoPor() {
+    const dialogRef = this.dialog.open(solicitadoPorAgregarEditarComponent, {
+      width: '35%',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result && result.solicitadoPor) {
+        const newSolicitadoPor = result.solicitadoPor;
+        this.solicitadoPor = this.solicitadoPor.sort((a, b) =>
+          a.nombreSolicitadoPor.localeCompare(b.nombreSolicitadoPor)
+        );
+        this.obtenerListadoSolicitadoPor();
+      }
+    });
+  }
+
   agregarEditarLaboratorista() {
     const dialogRef = this.dialog.open(LaboratoristasAgregarEditarComponent, {
       width: '35%',
@@ -440,21 +506,6 @@ export class NuevaOrdenAgregarEditarComponent implements OnInit {
           a.apellido.localeCompare(b.apellido)
         );
         this.obtenerListadoLaboratoristas();
-      }
-    });
-  }
-
-  agregarEditarSolicitadoPor() {
-    const dialogRef = this.dialog.open(solicitadoPorAgregarEditarComponent, {
-      width: '35%',
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result && result.solicitadoPor) {
-        const newSolicitadoPor = result.solicitadoPor;
-        this.solicitadopor = this.solicitadopor.sort((a, b) =>
-          a.nombreSolicitadoPor.localeCompare(b.nombreSolicitadoPor)
-        );
-        this.obtenerListadoSolicitadoPor();
       }
     });
   }

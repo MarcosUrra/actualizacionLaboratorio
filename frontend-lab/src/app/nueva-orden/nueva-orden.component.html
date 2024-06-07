@@ -1,208 +1,391 @@
 <div class="listaNuevaOrden">
+  <div class="encabezado-container">
+    <h1>Listado de Ordenes</h1>
+    <br />
 
-    <div class="encabezado-container">
-        <h1>Listado de Ordenes</h1> <br>
+    <button
+      mat-raised-button
+      (click)="DialogoUnaNuevaOrden()"
+      style="
+        border: none;
+        background-color: #3f51b5;
+        color: white;
+        height: 40px;
+        width: 200px;
+        font-size: 16px;
+      "
+    >
+      NUEVA ORDEN
+    </button>
+  </div>
+  <button [matMenuTriggerFor]="menuColumnas" class="boton-personalizado">
+    Seleccionar Columnas
+  </button>
+  <mat-menu #menuColumnas="matMenu">
+    <ng-container *ngFor="let col of displayedColumns; let i = index">
+      <mat-checkbox
+        color="primary"
+        (click)="$event.stopPropagation()"
+        (change)="toggleColumn(col)"
+        [checked]="columnasSeleccionadas.includes(col)"
+      >
+        {{ columnasAlias[col] }}
+      </mat-checkbox>
+    </ng-container>
+  </mat-menu>
 
-        <button mat-raised-button (click)="DialogoUnaNuevaOrden()"
-            style="border: none;background-color: #3f51b5;color: white; height: 40px; width: 200px;font-size: 16px; ">NUEVA
-            ORDEN</button>
-    </div>
-    <button [matMenuTriggerFor]="menuColumnas" class="boton-personalizado">Seleccionar Columnas</button>
-    <mat-menu #menuColumnas="matMenu">
-        <ng-container *ngFor="let col of displayedColumns; let i = index">
-            <mat-checkbox color="primary" (click)="$event.stopPropagation()" (change)="toggleColumn(col)"
-                [checked]="columnasSeleccionadas.includes(col)">
-                {{ columnasAlias[col] }}
-            </mat-checkbox>
-        </ng-container>
+  <button
+    (click)="abrirPopup(columnasSeleccionadas)"
+    class="boton-personalizado"
+  >
+    Ordenar Columnas
+  </button>
+
+  <div style="display: flex; justify-content: space-between">
+    <mat-form-field
+      appearance="outline"
+      style="flex: 1; max-width: 200px"
+      *ngIf="mostrarNroOrden"
+    >
+      <input
+        matInput
+        (keyup)="filtroOrden($event)"
+        placeholder="Nro de Orden"
+        #input
+      />
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      style="flex: 1; max-width: 200px"
+      *ngIf="mostrarNroDocumento"
+    >
+      <input
+        matInput
+        (keyup)="filtroDocumento($event)"
+        placeholder="Nro Documento"
+        #input
+      />
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      style="flex: 1; max-width: 200px"
+      *ngIf="mostrarNombreCompleto"
+    >
+      <input
+        matInput
+        (keyup)="filtroNombreCompleto($event)"
+        placeholder="Nombre Completo"
+        #input
+      />
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      style="flex: 1; max-width: 200px"
+      *ngIf="mostrarAnalisis"
+    >
+      <input
+        matInput
+        (keyup)="filtroAnalisis($event)"
+        placeholder="Análisis"
+        #input
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="flex: 1; max-width: 200px">
+      <mat-label>Rango de fecha</mat-label>
+      <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+        <input
+          matStartDate
+          formControlName="start"
+          placeholder="Fecha inicial"
+          #dateRangeStart
+        />
+        <input
+          matEndDate
+          formControlName="end"
+          placeholder="Fecha final"
+          #dateRangeEnd
+          (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)"
+        />
+      </mat-date-range-input>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+
+    <mat-menu #menu="matMenu" class="menu-custom-style">
+      <button mat-menu-item>
+        <mat-checkbox
+          color="primary"
+          [(ngModel)]="seleccionadoAnalisis"
+          (change)="mostrarCampoAnalisis($event)"
+          (click)="$event.stopPropagation()"
+          >Análisis</mat-checkbox
+        >
+      </button>
+      <button mat-menu-item>
+        <mat-checkbox
+          color="primary"
+          [(ngModel)]="seleccionadoNroOrden"
+          (change)="mostrarCampoNroOrden($event)"
+          (click)="$event.stopPropagation()"
+          >Nro. Análisis</mat-checkbox
+        >
+      </button>
+      <button mat-menu-item>
+        <mat-checkbox
+          color="primary"
+          [(ngModel)]="seleccionadoNombreCompleto"
+          (change)="mostrarCampoNombreCompleto($event)"
+          (click)="$event.stopPropagation()"
+          >Nombre Completo</mat-checkbox
+        >
+      </button>
+      <button mat-menu-item>
+        <mat-checkbox
+          color="primary"
+          [(ngModel)]="seleccionadoNroDocumento"
+          (change)="mostrarCampoNroDocumento($event)"
+          (click)="$event.stopPropagation()"
+          >Documento</mat-checkbox
+        >
+      </button>
     </mat-menu>
 
+    <button
+      mat-button
+      [matMenuTriggerFor]="menu"
+      id="filtroButton"
+      class="filtro-button"
+      (click)="$event.stopPropagation()"
+    >
+      <img
+        src="assets/imagenes/filtrar.png"
+        alt="filtro"
+        style="width: 40px; height: 40px; margin-top: 80%; margin-bottom: 10%"
+      />
+    </button>
+  </div>
 
-    <button (click)="abrirPopup(columnasSeleccionadas)" class="boton-personalizado">Ordenar Columnas</button>
-
-    <div style="display: flex; justify-content: space-between;">
-        <mat-form-field appearance="outline" style="flex: 1;  max-width: 200px;" *ngIf="mostrarNroOrden">
-            <input matInput (keyup)="filtroOrden($event)" placeholder="Nro de Orden" #input>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" style="flex: 1;  max-width: 200px;" *ngIf="mostrarNroDocumento">
-            <input matInput (keyup)="filtroDocumento($event)" placeholder="Nro Documento" #input>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" style="flex: 1;  max-width: 200px;" *ngIf="mostrarNombreCompleto">
-            <input matInput (keyup)="filtroNombreCompleto($event)" placeholder="Nombre Completo" #input>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" style="flex: 1; max-width: 200px;" *ngIf="mostrarAnalisis">
-            <input matInput (keyup)="filtroAnalisis($event)" placeholder="Análisis" #input>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" style="flex: 1; max-width: 200px;">
-            <mat-label>Rango de fecha</mat-label>
-            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-                <input matStartDate formControlName="start" placeholder="Fecha inicial" #dateRangeStart>
-                <input matEndDate formControlName="end" placeholder="Fecha final" #dateRangeEnd
-                    (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)">
-            </mat-date-range-input>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-date-range-picker #picker></mat-date-range-picker>
-        </mat-form-field>
-
-
-        <mat-menu #menu="matMenu" class="menu-custom-style">
-            <button mat-menu-item>
-                <mat-checkbox color="primary" [(ngModel)]="seleccionadoAnalisis" (change)="mostrarCampoAnalisis($event)"
-                    (click)="$event.stopPropagation()">Análisis</mat-checkbox>
-            </button>
-            <button mat-menu-item>
-                <mat-checkbox color="primary" [(ngModel)]="seleccionadoNroOrden" (change)="mostrarCampoNroOrden($event)"
-                    (click)="$event.stopPropagation()">Nro.
-                    Análisis</mat-checkbox>
-            </button>
-            <button mat-menu-item>
-                <mat-checkbox color="primary" [(ngModel)]="seleccionadoNombreCompleto"
-                    (change)="mostrarCampoNombreCompleto($event)" (click)="$event.stopPropagation()">Nombre
-                    Completo</mat-checkbox>
-            </button>
-            <button mat-menu-item>
-                <mat-checkbox color="primary" [(ngModel)]="seleccionadoNroDocumento"
-                    (change)="mostrarCampoNroDocumento($event)"
-                    (click)="$event.stopPropagation()">Documento</mat-checkbox>
-            </button>
-        </mat-menu>
-
-        <button mat-button [matMenuTriggerFor]="menu" id="filtroButton" class="filtro-button"
-            (click)="$event.stopPropagation()">
-            <img src="assets/imagenes/filtrar.png" alt="filtro"
-                style="width: 40px; height: 40px; margin-top: 80%; margin-bottom: 10%;">
-        </button>
-
+  <div class="mat-elevation-z8">
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        padding-top: 10px;
+        margin-left: 15px;
+      "
+    >
+      <p>
+        <b>Total de filas seleccionadas: {{ totalFilas }}</b>
+      </p>
     </div>
 
-    <div class="mat-elevation-z8">
-        <div style="display: flex; align-items: center; justify-content: left;padding-top: 10px;margin-left: 15px;">
-            <p><b>Total de filas seleccionadas: {{ totalFilas }}</b></p>
-        </div>
+    <table mat-table [dataSource]="dataSource" id="tablaNuevaOrden">
+      <ng-container
+        matColumnDef="NumeroOrden"
+        *ngIf="columnasSeleccionadas.includes('NumeroOrden')"
+      >
+        <th mat-header-cell *matHeaderCellDef>Número Análisis</th>
 
-        <table mat-table [dataSource]="dataSource" id="tablaNuevaOrden">
-            <ng-container matColumnDef="NumeroOrden" *ngIf="columnasSeleccionadas.includes('NumeroOrden')">
-                <th mat-header-cell *matHeaderCellDef>Número Análisis</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
 
-                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-            </ng-container>
+      <ng-container
+        matColumnDef="NumDoc"
+        *ngIf="columnasSeleccionadas.includes('NumDoc')"
+      >
+        <th mat-header-cell *matHeaderCellDef>Número de Documento</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.paciente.numeroDocumento }}
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="NumDoc" *ngIf="columnasSeleccionadas.includes('NumDoc')">
-                <th mat-header-cell *matHeaderCellDef>Número de Documento </th>
-                <td mat-cell *matCellDef="let element"> {{element.paciente.numeroDocumento}} </td>
-            </ng-container>
+      <ng-container
+        matColumnDef="Apellido"
+        *ngIf="columnasSeleccionadas.includes('Apellido')"
+      >
+        <th mat-header-cell *matHeaderCellDef>Apellido</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.paciente.apellido }}
+        </td>
+      </ng-container>
 
+      <ng-container
+        matColumnDef="Nombre"
+        *ngIf="columnasSeleccionadas.includes('Nombre')"
+      >
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.paciente.nombre }}
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="Apellido" *ngIf="columnasSeleccionadas.includes('Apellido')">
-                <th mat-header-cell *matHeaderCellDef>Apellido </th>
-                <td mat-cell *matCellDef="let element"> {{element.paciente.apellido}} </td>
-            </ng-container>
+      <ng-container
+        matColumnDef="numeroHistoriaClinica"
+        *ngIf="columnasSeleccionadas.includes('numeroHistoriaClinica')"
+      >
+        <th mat-header-cell *matHeaderCellDef>Historia Clínica</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.numeroHistoriaClinica }}
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="Nombre" *ngIf="columnasSeleccionadas.includes('Nombre')">
-                <th mat-header-cell *matHeaderCellDef>Nombre </th>
-                <td mat-cell *matCellDef="let element"> {{element.paciente.nombre}} </td>
-            </ng-container>
+      <ng-container
+        matColumnDef="obraSocial"
+        *ngIf="columnasSeleccionadas.includes('obraSocial')"
+      >
+        <th mat-header-cell *matHeaderCellDef>Obra Social</th>
+        <td mat-cell *matCellDef="let element">{{ element.obraSocial }}</td>
+      </ng-container>
 
-            <ng-container matColumnDef="numeroHistoriaClinica"
-                *ngIf="columnasSeleccionadas.includes('numeroHistoriaClinica')">
-                <th mat-header-cell *matHeaderCellDef>Historia Clínica</th>
-                <td mat-cell *matCellDef="let element"> {{element.numeroHistoriaClinica}} </td>
-            </ng-container>
+      <ng-container
+        matColumnDef="solicitadoPor"
+        *ngIf="columnasSeleccionadas.includes('solicitadoPor')"
+      >
+        <th mat-header-cell *matHeaderCellDef>Solicitado Por</th>
+        <td mat-cell *matCellDef="let element">{{ element.solicitadoPor }}</td>
+      </ng-container>
 
-            <ng-container matColumnDef="obraSocial" *ngIf="columnasSeleccionadas.includes('obraSocial')">
-                <th mat-header-cell *matHeaderCellDef>Obra Social</th>
-                <td mat-cell *matCellDef="let element"> {{element.obraSocial}} </td>
-            </ng-container>
+      <ng-container
+        matColumnDef="Medico"
+        *ngIf="columnasSeleccionadas.includes('Medico')"
+      >
+        <th mat-header-cell *matHeaderCellDef>Médico</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.medicos?.nombre + " " + element.medicos?.apellido }}
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="solicitadoPor" *ngIf="columnasSeleccionadas.includes('solicitadoPor')">
-                <th mat-header-cell *matHeaderCellDef>Solicitado Por</th>
-                <td mat-cell *matCellDef="let element"> {{element.solicitadoPor}} </td>
-            </ng-container>
+      <ng-container
+        matColumnDef="Laboratorista"
+        *ngIf="columnasSeleccionadas.includes('Laboratorista')"
+      >
+        <th mat-header-cell *matHeaderCellDef>Laboratorista</th>
+        <td mat-cell *matCellDef="let element">
+          {{
+            element.laboratorista?.nombre +
+              " " +
+              element.laboratorista?.apellido
+          }}
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="Medico" *ngIf="columnasSeleccionadas.includes('Medico')">
-                <th mat-header-cell *matHeaderCellDef>Médico</th>
-                <td mat-cell *matCellDef="let element"> {{element.medicos?.nombre + ' ' + element.medicos?.apellido }}
-                </td>
-            </ng-container>
+      <ng-container
+        matColumnDef="FechaSolicitud"
+        *ngIf="columnasSeleccionadas.includes('FechaSolicitud')"
+      >
+        <th mat-header-cell *matHeaderCellDef>Fecha Solicitud</th>
+        <td mat-cell *matCellDef="let element">{{ element.fecha }}</td>
+      </ng-container>
 
-            <ng-container matColumnDef="Laboratorista" *ngIf="columnasSeleccionadas.includes('Laboratorista')">
-                <th mat-header-cell *matHeaderCellDef>Laboratorista</th>
-                <td mat-cell *matCellDef="let element"> {{element.laboratorista?.nombre + ' ' +
-                    element.laboratorista?.apellido}} </td>
-            </ng-container>
+      <ng-container
+        matColumnDef="NumeroOrdenDiario"
+        *ngIf="columnasSeleccionadas.includes('NumeroOrdenDiario')"
+      >
+        <th mat-header-cell *matHeaderCellDef>Orden Diario</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.numeroOrdenDiario }}
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="FechaSolicitud" *ngIf="columnasSeleccionadas.includes('FechaSolicitud')">
-                <th mat-header-cell *matHeaderCellDef>Fecha Solicitud</th>
-                <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
-            </ng-container>
+      <ng-container
+        matColumnDef="ListadoAnalisis"
+        *ngIf="columnasSeleccionadas.includes('ListadoAnalisis')"
+      >
+        <th mat-header-cell *matHeaderCellDef>Listado Análisis</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            mat-button
+            (click)="verAnalisis(element)"
+            style="border: none; background-color: rgb(232, 230, 228)"
+          >
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="NumeroOrdenDiario" *ngIf="columnasSeleccionadas.includes('NumeroOrdenDiario')">
-                <th mat-header-cell *matHeaderCellDef>Orden Diario</th>
-                <td mat-cell *matCellDef="let element"> {{element.numeroOrdenDiario}} </td>
-            </ng-container>
+      <ng-container
+        matColumnDef="Resultados"
+        *ngIf="columnasSeleccionadas.includes('Resultados')"
+      >
+        <th mat-header-cell *matHeaderCellDef>Resultados</th>
+        <td mat-cell *matCellDef="let element">{{ element.Resultados }}</td>
+      </ng-container>
 
+      <ng-container
+        matColumnDef="observaciones"
+        *ngIf="columnasSeleccionadas.includes('observaciones')"
+      >
+        <th mat-header-cell *matHeaderCellDef>Observaciones</th>
+        <td mat-cell *matCellDef="let element">{{ element.observaciones }}</td>
+      </ng-container>
 
-            <ng-container matColumnDef="ListadoAnalisis" *ngIf="columnasSeleccionadas.includes('ListadoAnalisis')">
-                <th mat-header-cell *matHeaderCellDef>Listado Análisis</th>
-                <td mat-cell *matCellDef="let element">
-                    <button mat-button (click)="verAnalisis(element)"
-                        style="border: none; background-color: rgb(232, 230, 228);">
-                        <mat-icon>visibility</mat-icon>
-                    </button>
-                </td>
-            </ng-container>
+      <ng-container
+        matColumnDef="observacionesInternas"
+        *ngIf="columnasSeleccionadas.includes('observacionesInternas')"
+      >
+        <th mat-header-cell *matHeaderCellDef>Observaciones Internas</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.observacionesInternas }}
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="Resultados" *ngIf="columnasSeleccionadas.includes('Resultados')">
-                <th mat-header-cell *matHeaderCellDef>Resultados</th>
-                <td mat-cell *matCellDef="let element"> {{element.Resultados}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="observaciones" *ngIf="columnasSeleccionadas.includes('observaciones')">
-                <th mat-header-cell *matHeaderCellDef>Observaciones</th>
-                <td mat-cell *matCellDef="let element"> {{element.observaciones}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="observacionesInternas" *ngIf="columnasSeleccionadas.includes('observacionesInternas')">
-                <th mat-header-cell *matHeaderCellDef>Observaciones Internas</th>
-                <td mat-cell *matCellDef="let element"> {{element.observacionesInternas}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="Acciones">
-                <th mat-header-cell *matHeaderCellDef style="width: 60px"></th>
-                <td mat-cell *matCellDef="let element" class="Acciones">
-                    <div class="acciones-container">
-                        <button mat-icon-button (click)="DialogoEditarNuevaOrden(element)"
-                            [disabled]="element.impresa == true?true:false"
-                            style="border: none; background-color: rgb(232, 230, 228);">
-                            <mat-icon color="primary">edit</mat-icon>
-                        </button>
-                        <button mat-icon-button (click)="imprimirInforme(element)"
-                            style="border: none; background-color: rgb(232, 230, 228);">
-                            <mat-icon style="color: forestgreen;">print</mat-icon>
-                        </button>
-                    </div>
-                </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="columnasSeleccionadas; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: columnasSeleccionadas;"></tr>
-
-        </table>
-
-
-        <div style="display: flex; align-items: center; justify-content: center;">
-            <button mat-icon-button (click)="onImprimirCompleto(dataSource)"
-                style="border: none; background-color: rgb(232, 230, 228); margin-left: 20px;">
-
-                <mat-icon style="color: forestgreen;">print</mat-icon>
+      <ng-container matColumnDef="Acciones">
+        <th mat-header-cell *matHeaderCellDef style="width: 60px"></th>
+        <td mat-cell *matCellDef="let element" class="Acciones">
+          <div class="acciones-container">
+            <button
+              mat-icon-button
+              (click)="DialogoEditarNuevaOrden(element)"
+              [disabled]="element.impresa == true ? true : false"
+              style="border: none; background-color: rgb(232, 230, 228)"
+            >
+              <mat-icon color="primary">edit</mat-icon>
             </button>
+            <button
+              mat-icon-button
+              (click)="imprimirInforme(element)"
+              style="border: none; background-color: rgb(232, 230, 228)"
+            >
+              <mat-icon style="color: forestgreen">print</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
 
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Items por página">
-            </mat-paginator>
-        </div>
+      <tr
+        mat-header-row
+        *matHeaderRowDef="columnasSeleccionadas; sticky: true"
+      ></tr>
+      <tr mat-row *matRowDef="let row; columns: columnasSeleccionadas"></tr>
+    </table>
+
+    <div style="display: flex; align-items: center; justify-content: center">
+      <button
+        mat-icon-button
+        (click)="onImprimirCompleto(dataSource)"
+        style="
+          border: none;
+          background-color: rgb(232, 230, 228);
+          margin-left: 20px;
+        "
+      >
+        <mat-icon style="color: forestgreen">print</mat-icon>
+      </button>
+
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        aria-label="Items por página"
+      >
+      </mat-paginator>
     </div>
+  </div>
 </div>

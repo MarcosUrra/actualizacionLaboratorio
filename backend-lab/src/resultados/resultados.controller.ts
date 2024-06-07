@@ -52,6 +52,16 @@ export class ResultadosController {
   ): Promise<ResultadosEntity | undefined> {
     return this.ResultadosService.actualizarResultadoPorId(id, nuevosValores);
   }
+  @Put('actualizarResultadoSubcategoriaPorId/:id')
+  async actualizarResultadoSubcategoriaPorId(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() nuevosValores: any,
+  ): Promise<ResultadosEntity | undefined> {
+    return this.ResultadosService.actualizarResultadoSubcategoriaPorId(
+      id,
+      nuevosValores,
+    );
+  }
 
   @Delete('eliminarResultadoPorId/:id')
   async eliminarResultadoPorId(

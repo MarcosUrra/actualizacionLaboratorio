@@ -2,7 +2,10 @@ export interface NuevaOrden {
   id: number;
   numeroOrdenDiario: string;
   numeroHistoriaClinica: string;
-  obraSocial: string;
+  obraSocial?: {
+    id: number;
+    nombreObraSocial: string;
+  };
   paciente: {
     id: number | undefined;
     numeroDocumento: string;

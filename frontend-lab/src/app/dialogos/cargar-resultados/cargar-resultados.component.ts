@@ -75,41 +75,40 @@ export class CargarResultadosComponent implements OnInit {
         // this.resultadosPrevios = resultados || [];
         // this.llenarFormularioConResultadosPrevios();
         // console.log(this.data.listadoAnalisisValores,resultados)
-        this.data.listadoAnalisisValores.forEach((element:any) => {
+        this.data.listadoAnalisisValores.forEach((element: any) => {
           resultados.analisis.forEach((resultado: any) => {
             // console.log(element,resultado)
             // debugger;
             if (element.id === resultado.id) {
               array.push(element);
             }
-          })
-        })
+          });
+        });
       });
-      console.log(array)
-      this.listadoAnalisisValores = array;
+    console.log(array);
+    this.listadoAnalisisValores = array;
   }
 
   llenarFormularioConResultadosPrevios(): void {
-  //   this.resultadosPrevios.forEach((resultado: any) => {
-  //     const controlName = 'analisis_' + resultado.id_analisis;
-  //     const resultadoControl = this.formCargarResultados.get(controlName);
-  //     const resultadoIdControl = this.formCargarResultados.get('resultadoId');
-  //     if (resultadoControl && resultadoIdControl) {
-  //       resultadoControl.setValue(resultado.resultados);
-  //       resultadoIdControl.setValue(resultado.id);
-  //     }
-
-  //     if (resultado.subcategorias) {
-  //       resultado.subcategorias.forEach((subcat: Subcategoria) => {
-  //         const subcatControlName = 'subcategoria_' + subcat.id;
-  //         const subcatControl =
-  //           this.formCargarResultados.get(subcatControlName);
-  //         if (subcatControl) {
-  //           subcatControl.setValue(subcat.valores);
-  //         }
-  //       });
-  //     }
-  //   });
+    //   this.resultadosPrevios.forEach((resultado: any) => {
+    //     const controlName = 'analisis_' + resultado.id_analisis;
+    //     const resultadoControl = this.formCargarResultados.get(controlName);
+    //     const resultadoIdControl = this.formCargarResultados.get('resultadoId');
+    //     if (resultadoControl && resultadoIdControl) {
+    //       resultadoControl.setValue(resultado.resultados);
+    //       resultadoIdControl.setValue(resultado.id);
+    //     }
+    //     if (resultado.subcategorias) {
+    //       resultado.subcategorias.forEach((subcat: Subcategoria) => {
+    //         const subcatControlName = 'subcategoria_' + subcat.id;
+    //         const subcatControl =
+    //           this.formCargarResultados.get(subcatControlName);
+    //         if (subcatControl) {
+    //           subcatControl.setValue(subcat.valores);
+    //         }
+    //       });
+    //     }
+    //   });
   }
 
   verAnalisis(data: any, unidades: any): void {
@@ -171,15 +170,28 @@ export class CargarResultadosComponent implements OnInit {
       resultados: this.formCargarResultados.get('resultados')?.value || '',
       analisis: [] as { id: number; resultado: any }[],
     };
-    this.listadoAnalisisValores.forEach((analisis: Analisis) => {
+
+    this.listadoAnalisisValores.forEach((analisis: any) => {
       const resultadoControl = this.formCargarResultados.get(
         'analisis_' + analisis.id
       );
-      const resultado = resultadoControl?.value || '';
+      let resultado = '';
+      resultado = resultadoControl?.value || '';
       if (analisis.id !== undefined) {
         resultados.analisis.push({ id: analisis.id, resultado });
       }
-      if (analisis.subcategorias) {
+      if (analisis.subcategorias.length <= 0) {
+        let resultado = this.formCargarResultados.get(
+          'analisis_' + analisis.id
+        );
+        this.actualizarResultadoEnBD(
+          analisis.id,
+          resultado?.value,
+          this.data.idOrden
+        );
+      }
+      if (analisis.subcategorias.length >= 1) {
+        resultados.analisis = [];
         analisis.subcategorias.forEach((subcat: Subcategoria) => {
           const subcatControl = this.formCargarResultados.get(
             'subcategoria_' + subcat.id
@@ -189,33 +201,41 @@ export class CargarResultadosComponent implements OnInit {
             id: subcat.id,
             resultado: subcatResultado,
           });
+          resultados.analisis.forEach((element) => {
+            this.actualizarResultadoEnBDSubcategorias(
+              element.id,
+              element.resultado,
+              analisis.id
+            );
+          });
         });
       }
+      // debugger
     });
 
-    this.resultadosPrevios.forEach((r: any) => {
-      const analisisExistente = resultados.analisis.find(
-        (a) => a.id === r.id_analisis
-      );
-      if (analisisExistente) {
-        if (r.resultados !== analisisExistente.resultado) {
-          this.actualizarResultadoEnBD(r.id, analisisExistente.resultado);
-        }
-      }
-    });
+    // this.resultadosPrevios.forEach((r: any) => {
+    //   const analisisExistente = resultados.analisis.find(
+    //     (a) => a.id === r.id_analisis
+    //   );
+    //   if (analisisExistente) {
+    //     if (r.resultados !== analisisExistente.resultado) {
+    //       this.actualizarResultadoEnBD(r.id, analisisExistente.resultado);
+    //     }
+    //   }
+    // });
 
-    resultados.analisis.forEach((a: { id: any; resultado: any }) => {
-      const resultadoExistente = this.resultadosPrevios.find(
-        (r) => r.id_analisis === a.id
-      );
-      if (resultadoExistente) {
-        if (resultadoExistente.resultados !== a.resultado) {
-          this.actualizarResultadoEnBD(resultadoExistente.id, a.resultado);
-        }
-      } else {
-        this.crearNuevoResultadoEnBD(a);
-      }
-    });
+    // resultados.analisis.forEach((a: { id: any; resultado: any }) => {
+    //   const resultadoExistente = this.resultadosPrevios.find(
+    //     (r) => r.id_analisis === a.id
+    //   );
+    //   if (resultadoExistente) {
+    //     if (resultadoExistente.resultados !== a.resultado) {
+    //       this.actualizarResultadoEnBD(resultadoExistente.id, a.resultado);
+    //     }
+    //   } else {
+    //     this.crearNuevoResultadoEnBD(a);
+    //   }
+    // });
 
     this.dialogRef.close('guardado');
   }
@@ -249,9 +269,47 @@ export class CargarResultadosComponent implements OnInit {
       });
   }
 
-  actualizarResultadoEnBD(idResultado: number, nuevoResultado: any): void {
+  actualizarResultadoEnBD(
+    idResultado: number,
+    nuevoResultado: any,
+    idOrden: number
+  ): void {
     this.nuevaOrdenService
-      .modificarResultado(idResultado, nuevoResultado)
+      .modificarResultado(idResultado, nuevoResultado, idOrden)
+      .subscribe({
+        next: (respuesta) => {
+          const index = this.resultadosPrevios.findIndex(
+            (resultado) => resultado.id === idResultado
+          );
+          if (index !== -1) {
+            this.resultadosPrevios[index] = {
+              id: idResultado,
+              resultado: nuevoResultado,
+            };
+            this.mostrarAlerta('Resultado guardado correctamente', 'Listo');
+          } else {
+            console.error(
+              'No se encontró el resultado en resultadosPrevios con id:',
+              idResultado
+            );
+          }
+        },
+        error: (error) => {
+          console.error(
+            'Error al actualizar resultado en la base de datos:',
+            error
+          );
+          this.mostrarAlerta('No se pudo guardar el resultado', 'Error');
+        },
+      });
+  }
+  actualizarResultadoEnBDSubcategorias(
+    idResultado: number,
+    nuevoResultado: any,
+    idAnalisis: number
+  ): void {
+    this.nuevaOrdenService
+      .modificarResultadoSubcategorias(idResultado, nuevoResultado, idAnalisis)
       .subscribe({
         next: (respuesta) => {
           const index = this.resultadosPrevios.findIndex(

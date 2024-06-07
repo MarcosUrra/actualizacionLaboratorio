@@ -13,6 +13,7 @@ import { LaboratoristasModule } from './laboratoristas/laboratoristas.module';
 import { ResultadosModule } from './resultados/resultados.module';
 import { SolicitadoPorModule } from './solicitado-por/solicitado-por.module';
 import { SubcategoriaEntity } from './analisis/entities/SubcategoriaEntity';
+import { obrasSocialesModule } from './obras-sociales/obras-sociales.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { SubcategoriaEntity } from './analisis/entities/SubcategoriaEntity';
     LaboratoristasModule,
     ResultadosModule,
     SolicitadoPorModule,
+    obrasSocialesModule,
 
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -34,6 +36,7 @@ import { SubcategoriaEntity } from './analisis/entities/SubcategoriaEntity';
       password: '',
       database: 'laboratoriohospital',
       entities: [SubcategoriaEntity, join(__dirname, '**', '*.entity.{ts,js}')],
+
       synchronize: true,
     }),
   ],

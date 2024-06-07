@@ -131,7 +131,7 @@ import {
 } from '@nestjs/common';
 import { ResultadosEntity } from './resultados.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { validate } from 'class-validator';
 
 @Injectable()
@@ -139,6 +139,7 @@ export class ResultadosService {
   constructor(
     @InjectRepository(ResultadosEntity)
     private resultadoRepository: Repository<ResultadosEntity>,
+    private dataSource: DataSource,
   ) {}
 
   async nuevoResultado(data: any, id: number): Promise<any> {
@@ -176,7 +177,6 @@ export class ResultadosService {
     }
     return resultados;
   }
-  
 
   async obtenerResultadoPorId(
     id: number,
@@ -191,9 +191,8 @@ export class ResultadosService {
     nuevosValores: any,
   ): Promise<ResultadosEntity | undefined> {
     const resultadoExistente = await this.resultadoRepository.findOne({
-      where: { id: id },
+      where: { id_orden: id },
     });
-
     if (resultadoExistente) {
       if (nuevosValores.nuevoResultado !== undefined) {
         resultadoExistente.resultados = nuevosValores.nuevoResultado;
@@ -204,6 +203,49 @@ export class ResultadosService {
       }
 
       return await this.resultadoRepository.save(resultadoExistente);
+    } else {
+      await this.dataSource.query(
+        'INSERT INTO resultados (id_orden,id_analisis,resultados) VALUES (?,?,?)',
+        [nuevosValores.idOrden, id, nuevosValores.nuevoResultado],
+      );
+      const resultados = await this.dataSource.query(
+        'SELECT * FROM subcategorias_resultados WHERE id = LAST_INSERT_ID()',
+      );
+      return resultados;
+    }
+  }
+  async actualizarResultadoSubcategoriaPorId(id: number, nuevosValores: any) {
+    const resultados = await this.dataSource.query(
+      'SELECT * FROM subcategorias_resultados WHERE id_subcategoria = ?;',
+      [id],
+    );
+    // Verificar si se encontró un resultado existente
+    if (resultados.length > 0) {
+      const resultadoExistente = resultados[0];
+
+      // Verificar si los nuevos valores contienen 'nuevoResultado'
+      if (nuevosValores !== undefined) {
+        const resultados = await this.dataSource.query(
+          'UPDATE subcategorias_resultados SET resultado = ?, id_analisis = ?, id_subcategoria = ? WHERE id_subcategoria = ?;',
+          [nuevosValores.nuevoResultado, nuevosValores.idAnalisis, id, id],
+        );
+        return resultados;
+      } else {
+        throw new BadRequestException(
+          'Faltan datos necesarios para editar el registro',
+        );
+      }
+    } else {
+      // Insertar los nuevos valores
+      await this.dataSource.query(
+        'INSERT INTO subcategorias_resultados (id_subcategoria,id_analisis,resultado) VALUES (?,?,?)',
+        [id, nuevosValores.idAnalisis, nuevosValores.nuevoResultado],
+      );
+
+      const resultados = await this.dataSource.query(
+        'SELECT * FROM subcategorias_resultados WHERE id = LAST_INSERT_ID()',
+      );
+      return resultados;
     }
 
     return undefined;

@@ -54,6 +54,8 @@ import { solicitadoPorAgregarEditarComponent } from './dialogos/solicitado-por-a
 import { MatChipsModule } from '@angular/material/chips';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { obrasSocialesComponent } from './obras-sociales/obras-sociales.component';
+import { obrasSocialesAgregarEditarComponent } from './dialogos/obras-sociales-agregar-editar/obras-sociales-agregar-editar.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +80,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     ReportesComponent,
     solicitadoPorAgregarEditarComponent,
     AnalisisComponent,
+    obrasSocialesAgregarEditarComponent,
   ],
 
   imports: [
@@ -118,6 +121,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatChipsModule,
     MatCardModule,
     MatExpansionModule,
+    obrasSocialesComponent,
   ],
 
   providers: [DatePipe],

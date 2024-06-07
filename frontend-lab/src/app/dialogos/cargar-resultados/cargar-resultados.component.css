@@ -1,38 +1,35 @@
 .table-container {
-    flex: 1; 
-    overflow-y: auto;
+  flex: 1;
+  overflow-y: auto;
 }
 
 .form-container table {
-    width: 100%; 
+  width: 100%;
 }
 
-.form-container table td:nth-child(4)
- {
-    text-align: center; 
+.form-container table td:nth-child(4) {
+  text-align: center;
 }
 
 .form-container table tbody tr td:nth-child(3),
 .form-container table tbody tr td:nth-child(5) {
-    text-align: left; 
+  text-align: left;
 }
 
-
 :host {
-    display: block;
-    padding: 10px;
+  display: block;
+  padding: 10px;
 }
 
 .mat-dialog-content {
-    overflow-y: auto;
+  overflow-y: auto;
 }
 
 .form-container {
-    max-height: 400px;
-    overflow-y: auto;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .mat-dialog-actions {
-    margin-top: auto;
+  margin-top: auto;
 }
- 

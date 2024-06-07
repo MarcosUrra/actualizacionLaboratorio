@@ -97,10 +97,24 @@ export class NuevaOrdenService {
     );
   }
 
-  modificarResultado(id: number, nuevoResultado: any): Observable<any> {
+  modificarResultado(
+    id: number,
+    nuevoResultado: any,
+    idOrden: number
+  ): Observable<any> {
     return this.http.put(
       `${environment.baseUrl}/resultados/actualizarResultadoPorId/${id}`,
-      { nuevoResultado }
+      { nuevoResultado, idOrden }
+    );
+  }
+  modificarResultadoSubcategorias(
+    id: number,
+    nuevoResultado: any,
+    idAnalisis: number
+  ): Observable<any> {
+    return this.http.put(
+      `${environment.baseUrl}/resultados/actualizarResultadoSubcategoriaPorId/${id}`,
+      { nuevoResultado, idAnalisis }
     );
   }
 
