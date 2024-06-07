@@ -3,8 +3,13 @@
   <form [formGroup]="formObraSocial">
     <mat-grid-list cols="1" rowHeight="90px">
       <mat-grid-tile>
-        < class="estado" (change)="actualizarEstado($event.checked)"
-        formControlName="estado" color="primary" >Estado ActivformObraSocial >
+        <mat-checkbox
+          class="estado"
+          (change)="actualizarEstado($event.checked)"
+          formControlName="estado"
+          color="primary"
+          >Estado Activo</mat-checkbox
+        >
         <mat-error *ngIf="formObraSocial.get('estado')?.hasError('required')">
           Al crear una nueva Obra Social debe activar el estado.
         </mat-error>
@@ -74,33 +79,33 @@
           </mat-error>
         </mat-form-field>
       </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            autocomplete="off"
+            (input)="formObraSocial.get('email')?.markAsTouched()"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Web</mat-label>
+          <input
+            matInput
+            formControlName="web"
+            autocomplete="off"
+            (input)="formObraSocial.get('web')?.markAsTouched()"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
     </mat-grid-list>
   </form>
 </div>
-
-<mat-grid-tile>
-  <mat-form-field appearance="outline">
-    <mat-label>Email</mat-label>
-    <input
-      matInput
-      formControlName="email"
-      autocomplete="off"
-      (input)="formObraSocial.get('email')?.markAsTouched()"
-    />
-  </mat-form-field>
-</mat-grid-tile>
-
-<mat-grid-tile>
-  <mat-form-field appearance="outline">
-    <mat-label>Web</mat-label>
-    <input
-      matInput
-      formControlName="web"
-      autocomplete="off"
-      (input)="formObraSocial.get('web')?.markAsTouched()"
-    />
-  </mat-form-field>
-</mat-grid-tile>
 
 <div mat-dialog-actions>
   <button mat-raised-button mat-dialog-close color="warn">VOLVER</button>
