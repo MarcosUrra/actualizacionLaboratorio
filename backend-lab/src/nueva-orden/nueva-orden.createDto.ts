@@ -2,7 +2,7 @@ export class EditarOrdenCreateDto {
   id: number;
   numeroOrdenDiario: string;
   numeroHistoriaClinica: string;
-  obraSocial: string;
+
   paciente: {
     id: number;
     numeroDocumento: string;
